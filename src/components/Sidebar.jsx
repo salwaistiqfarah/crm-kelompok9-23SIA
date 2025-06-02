@@ -8,9 +8,11 @@ import {
   User,
   LogIn,
   UserPlus,
+  HistoryIcon,
 } from 'lucide-react'
 import { BsPeople, BsPeopleFill } from "react-icons/bs";
 import { FaPeopleCarryBox } from 'react-icons/fa6'
+import { MdFeedback } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom'
 
 const menuItems = [
@@ -19,6 +21,9 @@ const menuItems = [
   { name: 'Produk', icon: <Box />, path: '/produk' },
   { name: 'Laporan', icon: <BarChart2 />, path: '/laporan' },
   { name: 'Penjualan', icon: <ShoppingCart />, path: '/penjualan' },
+  { name: 'Feedback', icon: <MdFeedback />, path: '/feedback' },
+  { name: 'Visit History', icon: <HistoryIcon />, path: '/visithistory' },
+
 
 ]
 
