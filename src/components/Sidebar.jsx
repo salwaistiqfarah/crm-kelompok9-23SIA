@@ -9,7 +9,7 @@ import {
   LogIn,
   UserPlus,
 } from 'lucide-react'
-import { BsPeople, BsPeopleFill } from 'react-icons/bs'
+import { BsPeople, BsPeopleFill } from "react-icons/bs";
 import { FaPeopleCarryBox } from 'react-icons/fa6'
 import { Link, useLocation } from 'react-router-dom'
 
