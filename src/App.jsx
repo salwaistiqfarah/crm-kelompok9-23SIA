@@ -5,6 +5,7 @@ import SalesManagement from './Pages/SalesManagement'
 import ProductManagement from './Pages/Produk'
 import CustomerManagement from './Pages/CustomerManagement'
 
+
 export function App() {
   return (
     <Routes>
