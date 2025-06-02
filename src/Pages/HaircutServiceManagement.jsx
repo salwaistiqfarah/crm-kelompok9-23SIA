@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 
-const initialProducts = [
+const initialHaircuts = [
   {
     id: 1,
-    name: "Laptop ABC",
-    category: "Elektronik",
-    stock: 10,
-    price: 7500000,
+    name: "Buzz Cut",
+    category: "Pria",
+    price: 35000,
     active: true,
   },
   {
     id: 2,
-    name: "Kursi Gaming",
-    category: "Furniture",
-    stock: 5,
-    price: 1250000,
-    active: false,
+    name: "Layered Cut",
+    category: "Wanita",
+    price: 50000,
+    active: true,
   },
 ];
 
@@ -26,13 +24,12 @@ function formatCurrency(num) {
   }).format(num);
 }
 
-export default function ProductManagement() {
-  const [products, setProducts] = useState(initialProducts);
+export default function HaircutServices() {
+  const [services, setServices] = useState(initialHaircuts);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     category: "",
-    stock: "",
     price: "",
     active: true,
   });
@@ -45,50 +42,49 @@ export default function ProductManagement() {
     }));
   };
 
-  const handleAddProduct = () => {
-    if (!formData.name || !formData.category || !formData.stock || !formData.price) {
+  const handleAddService = () => {
+    if (!formData.name || !formData.category || !formData.price) {
       alert("Semua kolom harus diisi");
       return;
     }
-    const newProduct = {
+    const newService = {
       ...formData,
-      id: products.length + 1,
-      stock: parseInt(formData.stock),
+      id: services.length + 1,
       price: parseFloat(formData.price),
     };
-    setProducts([...products, newProduct]);
-    setFormData({ name: "", category: "", stock: "", price: "", active: true });
+    setServices([...services, newService]);
+    setFormData({ name: "", category: "", price: "", active: true });
     setShowForm(false);
   };
 
   const handleDelete = (id) => {
-    if (window.confirm("Yakin ingin menghapus produk ini?")) {
-      setProducts(products.filter((p) => p.id !== id));
+    if (window.confirm("Yakin ingin menghapus layanan ini?")) {
+      setServices(services.filter((s) => s.id !== id));
     }
   };
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-semibold mb-4">Manajemen Produk</h1>
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-semibold mb-4">Layanan Potong Rambut</h1>
 
       <button
         onClick={() => setShowForm((prev) => !prev)}
-        className="mb-4 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
       >
-        {showForm ? "Batal Tambah Produk" : "Tambah Produk"}
+        {showForm ? "Batal Tambah Layanan" : "Tambah Layanan"}
       </button>
 
       {showForm && (
         <div className="mb-6 p-4 border border-gray-300 rounded bg-white shadow-sm">
           <div className="mb-2">
-            <label className="block mb-1 font-medium">Nama Produk</label>
+            <label className="block mb-1 font-medium">Nama Potongan</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded focus:ring-indigo-400 focus:outline-none"
-              placeholder="Masukkan nama produk"
+              className="w-full px-3 py-2 border rounded"
+              placeholder="Contoh: Fade, Layered, Undercut"
             />
           </div>
           <div className="mb-2">
@@ -98,19 +94,8 @@ export default function ProductManagement() {
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded focus:ring-indigo-400 focus:outline-none"
-              placeholder="Contoh: Elektronik"
-            />
-          </div>
-          <div className="mb-2">
-            <label className="block mb-1 font-medium">Stok</label>
-            <input
-              type="number"
-              name="stock"
-              value={formData.stock}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border rounded focus:ring-indigo-400 focus:outline-none"
-              min="0"
+              className="w-full px-3 py-2 border rounded"
+              placeholder="Contoh: Pria, Wanita, Anak-anak"
             />
           </div>
           <div className="mb-2">
@@ -120,7 +105,7 @@ export default function ProductManagement() {
               name="price"
               value={formData.price}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded focus:ring-indigo-400 focus:outline-none"
+              className="w-full px-3 py-2 border rounded"
               min="0"
             />
           </div>
@@ -133,15 +118,15 @@ export default function ProductManagement() {
                 onChange={handleChange}
                 className="mr-2"
               />
-              Aktif
+              Tersedia
             </label>
           </div>
 
           <button
-            onClick={handleAddProduct}
+            onClick={handleAddService}
             className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
           >
-            Simpan Produk
+            Simpan Layanan
           </button>
         </div>
       )}
@@ -152,27 +137,25 @@ export default function ProductManagement() {
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kategori</th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Stok</th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Harga</th>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Status</th>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Aksi</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
-            {products.map((product) => (
-              <tr key={product.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4">{product.name}</td>
-                <td className="px-6 py-4">{product.category}</td>
-                <td className="px-6 py-4 text-right">{product.stock}</td>
-                <td className="px-6 py-4 text-right">{formatCurrency(product.price)}</td>
+            {services.map((service) => (
+              <tr key={service.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4">{service.name}</td>
+                <td className="px-6 py-4">{service.category}</td>
+                <td className="px-6 py-4 text-right">{formatCurrency(service.price)}</td>
                 <td className="px-6 py-4 text-center">
-                  {product.active ? (
+                  {service.active ? (
                     <span className="inline-block px-2 py-1 text-xs text-green-800 bg-green-100 rounded">
-                      Aktif
+                      Tersedia
                     </span>
                   ) : (
                     <span className="inline-block px-2 py-1 text-xs text-gray-600 bg-gray-200 rounded">
-                      Nonaktif
+                      Tidak Tersedia
                     </span>
                   )}
                 </td>
@@ -185,17 +168,17 @@ export default function ProductManagement() {
                   </button>
                   <button
                     className="text-red-600 hover:text-red-900"
-                    onClick={() => handleDelete(product.id)}
+                    onClick={() => handleDelete(service.id)}
                   >
                     Hapus
                   </button>
                 </td>
               </tr>
             ))}
-            {products.length === 0 && (
+            {services.length === 0 && (
               <tr>
-                <td colSpan="6" className="text-center py-4 text-gray-500">
-                  Tidak ada produk tersedia.
+                <td colSpan="5" className="text-center py-4 text-gray-500">
+                  Tidak ada layanan tersedia.
                 </td>
               </tr>
             )}
@@ -205,4 +188,3 @@ export default function ProductManagement() {
     </div>
   );
 }
-

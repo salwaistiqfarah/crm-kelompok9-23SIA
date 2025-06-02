@@ -18,7 +18,7 @@ import { Link, useLocation } from 'react-router-dom'
 const menuItems = [
   { name: 'Dashboard', icon: <LayoutDashboard />, path: '/' },
   { name: 'Pelanggan', icon: <BsPeopleFill/>, path: '/Pelanggan' },
-  { name: 'Produk', icon: <Box />, path: '/produk' },
+  { name: 'Layanan Potong Rambut', icon: <Box />, path: '/HaircutServiceManagement' },
   { name: 'Laporan', icon: <BarChart2 />, path: '/laporan' },
   { name: 'Penjualan', icon: <ShoppingCart />, path: '/penjualan' },
   
@@ -26,7 +26,7 @@ const menuItems = [
   { name: 'Visit History', icon: <HistoryIcon />, path: '/visithistory' },
 
 
-]
+] 
 
 const accountItems = [
   { name: 'Pengaturan Akun', icon: <Settings />, path: '/akun' },
