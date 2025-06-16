@@ -8,7 +8,9 @@ import Login from './Pages/Auth/Login'
 import Register from './Pages/Auth/Register'
 import Feedback from './Pages/History/Feedback'
 import VisitHistory from './Pages/History/VisitHistory'
+import Laporan from './Pages/Admin/Laporan'
 import HaircutServiceManagement from './Pages/HaircutServiceManagement'
+
 
 
 export function App() {
@@ -20,10 +22,12 @@ export function App() {
       <Route element={<MainLayout />}>
         <Route path="/" element={<Dashboard />} />
          <Route path="/Penjualan" element={<SalesManagement />} />
-          <Route path="/HaircutServiceManagement" element={<HaircutServiceManagement />} />
+         
            <Route path="/Pelanggan" element={<CustomerManagement/>} />
            <Route path="/Feedback" element={<Feedback/>} />
            <Route path="/VisitHistory" element={<VisitHistory/>} />
+            <Route path="/Laporan" element={<Laporan/>} />
+             <Route path="/HaircutServiceManagement" element={<HaircutServiceManagement/>} />
       </Route>
     </Routes>
   )
