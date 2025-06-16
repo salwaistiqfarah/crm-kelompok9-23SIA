@@ -10,12 +10,17 @@ import {
   UserPlus,
 } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
+import { MdPayment, MdPhoneIphone } from 'react-icons/md';
+import { FaMoneyBillWave } from 'react-icons/fa';
 
 const menuItems = [
   { name: 'Dashboard', icon: <LayoutDashboard />, path: '/' },
   { name: 'Produk', icon: <Box />, path: '/produk' },
   { name: 'Laporan', icon: <BarChart2 />, path: '/laporan' },
   { name: 'Penjualan', icon: <ShoppingCart />, path: '/penjualan' },
+   { name: 'Payment Cash', icon: <FaMoneyBillWave />, path: '/paymentcash' },
+  { name: 'Payment Digital', icon: <MdPhoneIphone />, path: '/paymentdigital' },
+  { name: 'Payment Method', icon: <MdPayment />, path: '/paymentmethod' },
 ]
 
 const accountItems = [
