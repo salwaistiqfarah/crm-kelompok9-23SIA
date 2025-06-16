@@ -14,6 +14,8 @@ import { BsPeople, BsPeopleFill } from "react-icons/bs";
 import { FaPeopleCarryBox } from 'react-icons/fa6'
 import { MdFeedback } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom'
+import { MdPayment, MdPhoneIphone } from 'react-icons/md';
+import { FaMoneyBillWave } from 'react-icons/fa';
 
 const menuItems = [
   { name: 'Dashboard', icon: <LayoutDashboard />, path: '/' },
@@ -26,7 +28,11 @@ const menuItems = [
   { name: 'Visit History', icon: <HistoryIcon />, path: '/visithistory' },
 
 
-] 
+
+   { name: 'Payment Cash', icon: <FaMoneyBillWave />, path: '/paymentcash' },
+  { name: 'Payment Digital', icon: <MdPhoneIphone />, path: '/paymentdigital' },
+  { name: 'Payment Method', icon: <MdPayment />, path: '/paymentmethod' },
+]
 
 const accountItems = [
   { name: 'Pengaturan Akun', icon: <Settings />, path: '/akun' },
