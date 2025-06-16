@@ -12,6 +12,9 @@ import Laporan from './Pages/Admin/Laporan'
 import HaircutServiceManagement from './Pages/HaircutServiceManagement'
 
 
+import PaymentCash from './Payment/PaymentCash'
+import PaymentDigital from './Payment/PaymentDigital'
+import PaymentMethod from './Payment/PaymentMethod'
 
 export function App() {
   return (
@@ -28,6 +31,10 @@ export function App() {
            <Route path="/VisitHistory" element={<VisitHistory/>} />
             <Route path="/Laporan" element={<Laporan/>} />
              <Route path="/HaircutServiceManagement" element={<HaircutServiceManagement/>} />
+        <Route path="/penjualan" element={<SalesManagement />} />
+        <Route path="/paymentcash" element={<PaymentCash />} />
+        <Route path="/paymentdigital" element={<PaymentDigital />} />
+        <Route path="/paymentmethod" element={<PaymentMethod/>} />
       </Route>
     </Routes>
   )
