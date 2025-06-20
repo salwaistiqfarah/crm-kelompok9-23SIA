@@ -1,11 +1,6 @@
 import {
   LayoutDashboard,
-  Users,         // untuk pelanggan
-  ShoppingCart,  // untuk penjualan
-  Box,           // untuk produk
-  BarChart2,     // untuk laporan
   Settings,      // untuk pengaturan akun
-  User,
   LogIn,
   UserPlus,
   HistoryIcon,
@@ -13,9 +8,17 @@ import {
 import { BsPeople, BsPeopleFill } from "react-icons/bs";
 import { FaPeopleCarryBox } from 'react-icons/fa6'
 import { MdFeedback } from 'react-icons/md';
+  Percent,
+  from 'lucide-react'
+import { 
+  LuBadgePercent,
+  LuGift,
+  LuUsers,
+  LuZap,
+  LuUserCheck,
+  LuBolt,
+} from "react-icons/lu";
 import { Link, useLocation } from 'react-router-dom'
-import { MdPayment, MdPhoneIphone } from 'react-icons/md';
-import { FaMoneyBillWave } from 'react-icons/fa';
 
 const menuItems = [
   { name: 'Dashboard', icon: <LayoutDashboard />, path: '/' },
@@ -33,6 +36,15 @@ const menuItems = [
    { name: 'Payment Cash', icon: <FaMoneyBillWave />, path: '/paymentcash' },
   { name: 'Payment Digital', icon: <MdPhoneIphone />, path: '/paymentdigital' },
   { name: 'Payment Method', icon: <MdPayment />, path: '/paymentmethod' },
+
+  { name: 'Promo Management', icon: <LuBadgePercent />, path: '/Promo_Management' },
+  { name: 'Loyalty Program', icon: <LuGift />, path: '/Loyalty_Program' },
+  { name: 'Customer Segment', icon: <LuUsers />, path: '/Customer_Segment' },
+  { name: 'TriggeredPromo', icon: <LuZap />, path: '/Triggered_Promo' },
+
+  { name: 'Promo Display', icon: <Percent />, path: '/Promo_Display' },
+  { name: 'UserSegmentInfo', icon: <LuUserCheck />, path: '/UserSegmentInfo' },
+  { name: 'TriggeredPromoInfo', icon: <LuBolt />, path: '/TriggeredPromoInfo' },
 ]
 
 const accountItems = [
@@ -88,4 +100,3 @@ const Sidebar = () => {
 }
 
 export default Sidebar
-
