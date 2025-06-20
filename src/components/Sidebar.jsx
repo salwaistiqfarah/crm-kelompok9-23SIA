@@ -12,11 +12,11 @@ import {
 } from 'lucide-react'
 import { BsPeople, BsPeopleFill } from "react-icons/bs";
 import { FaPeopleCarryBox } from 'react-icons/fa6'
-import { MdFeedback } from 'react-icons/md';
+import { MdFeedback, MdOutlineAddShoppingCart } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom'
 import { MdPayment, MdPhoneIphone } from 'react-icons/md';
 import { FaMoneyBillWave } from 'react-icons/fa';
-
+import { FaRegListAlt } from 'react-icons/fa';
 const menuItems = [
   { name: 'Dashboard', icon: <LayoutDashboard />, path: '/' },
   { name: 'Pelanggan', icon: <BsPeopleFill/>, path: '/Pelanggan' },
@@ -32,6 +32,13 @@ const menuItems = [
    { name: 'Payment Cash', icon: <FaMoneyBillWave />, path: '/paymentcash' },
   { name: 'Payment Digital', icon: <MdPhoneIphone />, path: '/paymentdigital' },
   { name: 'Payment Method', icon: <MdPayment />, path: '/paymentmethod' },
+  { name: 'Antrian Layanan', icon: <BsPeopleFill />, path: '/servicequeue' },
+{ name: 'Status Layanan', icon: <FaPeopleCarryBox />, path: '/servicestatus' },
+{ name: 'Tagihan', icon: <FaMoneyBillWave />, path: '/invoicepage' },
+{ name: 'Notifikasi', icon: <MdPhoneIphone />, path: '/notificationpage' },
+{ name: 'Pemesanan Layanan', icon: <MdOutlineAddShoppingCart/>, path: '/booking' },
+{ name: 'Status Layanan Saya', icon: <FaRegListAlt />, path: '/userstatus' },
+{ name: 'Notifikasi User', icon: <MdPhoneIphone />, path: '/notificationpageuser' },
 ]
 
 const accountItems = [
