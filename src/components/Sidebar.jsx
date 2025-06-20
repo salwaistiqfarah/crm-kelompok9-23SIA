@@ -23,11 +23,12 @@ const menuItems = [
   { name: 'Layanan Potong Rambut', icon: <Box />, path: '/HaircutServiceManagement' },
   { name: 'Laporan', icon: <BarChart2 />, path: '/laporan' },
   { name: 'Penjualan', icon: <ShoppingCart />, path: '/penjualan' },
-  
+  { name: 'OrderBooking', icon: <MdFeedback />, path: '/OrderBooking' },
+   { name: 'BookingHistory', icon: <HistoryIcon />, path: '/BookingHistory' },
   { name: 'Feedback', icon: <MdFeedback />, path: '/feedback' },
   { name: 'Visit History', icon: <HistoryIcon />, path: '/visithistory' },
 
-
+  
 
    { name: 'Payment Cash', icon: <FaMoneyBillWave />, path: '/paymentcash' },
   { name: 'Payment Digital', icon: <MdPhoneIphone />, path: '/paymentdigital' },
