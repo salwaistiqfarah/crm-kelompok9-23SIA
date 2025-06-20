@@ -1,66 +1,73 @@
 import {
   LayoutDashboard,
-  Settings,      // untuk pengaturan akun
+  Settings,
   LogIn,
   UserPlus,
   HistoryIcon,
-} from 'lucide-react'
-import { BsPeople, BsPeopleFill } from "react-icons/bs";
-import { FaPeopleCarryBox } from 'react-icons/fa6'
-import { MdFeedback } from 'react-icons/md';
   Percent,
-  from 'lucide-react'
-import { 
+  Box,
+  BarChart2,
+  ShoppingCart
+} from 'lucide-react';
+
+import { BsPeopleFill } from 'react-icons/bs';
+import { FaMoneyBillWave } from 'react-icons/fa';
+import { MdFeedback, MdPhoneIphone, MdPayment } from 'react-icons/md';
+
+import {
   LuBadgePercent,
   LuGift,
   LuUsers,
   LuZap,
   LuUserCheck,
-  LuBolt,
-} from "react-icons/lu";
-import { Link, useLocation } from 'react-router-dom'
+  LuBolt
+} from 'react-icons/lu';
+
+import { Link, useLocation } from 'react-router-dom';
 
 const menuItems = [
   { name: 'Dashboard', icon: <LayoutDashboard />, path: '/' },
-  { name: 'Pelanggan', icon: <BsPeopleFill/>, path: '/Pelanggan' },
-  { name: 'Layanan Potong Rambut', icon: <Box />, path: '/HaircutServiceManagement' },
+  { name: 'Pelanggan', icon: <BsPeopleFill />, path: '/pelanggan' },
+  { name: 'Layanan Potong Rambut', icon: <Box />, path: '/haircutservicemanagement' },
   { name: 'Laporan', icon: <BarChart2 />, path: '/laporan' },
   { name: 'Penjualan', icon: <ShoppingCart />, path: '/penjualan' },
-  { name: 'OrderBooking', icon: <MdFeedback />, path: '/OrderBooking' },
-   { name: 'BookingHistory', icon: <HistoryIcon />, path: '/BookingHistory' },
+
+  // SFA
   { name: 'Feedback', icon: <MdFeedback />, path: '/feedback' },
   { name: 'Visit History', icon: <HistoryIcon />, path: '/visithistory' },
 
-  
-
-   { name: 'Payment Cash', icon: <FaMoneyBillWave />, path: '/paymentcash' },
+  // Payment
+  { name: 'Payment Cash', icon: <FaMoneyBillWave />, path: '/paymentcash' },
   { name: 'Payment Digital', icon: <MdPhoneIphone />, path: '/paymentdigital' },
   { name: 'Payment Method', icon: <MdPayment />, path: '/paymentmethod' },
 
-  { name: 'Promo Management', icon: <LuBadgePercent />, path: '/Promo_Management' },
-  { name: 'Loyalty Program', icon: <LuGift />, path: '/Loyalty_Program' },
-  { name: 'Customer Segment', icon: <LuUsers />, path: '/Customer_Segment' },
-  { name: 'TriggeredPromo', icon: <LuZap />, path: '/Triggered_Promo' },
+  // MA - Admin
+  { name: 'Promo Management', icon: <LuBadgePercent />, path: '/promo_management' },
+  { name: 'Loyalty Program', icon: <LuGift />, path: '/loyalty_program' },
+  { name: 'Customer Segment', icon: <LuUsers />, path: '/customer_segment' },
+  { name: 'Triggered Promo', icon: <LuZap />, path: '/triggered_promo' },
 
-  { name: 'Promo Display', icon: <Percent />, path: '/Promo_Display' },
-  { name: 'UserSegmentInfo', icon: <LuUserCheck />, path: '/UserSegmentInfo' },
-  { name: 'TriggeredPromoInfo', icon: <LuBolt />, path: '/TriggeredPromoInfo' },
-]
+  // MA - User
+  { name: 'Promo Display', icon: <Percent />, path: '/promo_display' },
+  { name: 'User Segment Info', icon: <LuUserCheck />, path: '/usersegmentinfo' },
+  { name: 'Triggered Promo Info', icon: <LuBolt />, path: '/triggeredpromoinfo' },
+];
 
 const accountItems = [
   { name: 'Pengaturan Akun', icon: <Settings />, path: '/akun' },
   { name: 'Sign In', icon: <LogIn />, path: '/signin' },
-  { name: 'Sign Up', icon: <UserPlus />, path: '/signup' },
-]
+  { name: 'Sign Up', icon: <UserPlus />, path: '/signup' }
+];
 
 const Sidebar = () => {
-  const location = useLocation()
+  const location = useLocation();
 
-  const isActive = (path) => location.pathname === path
+  const isActive = (path) => location.pathname === path;
 
   return (
     <aside className="bg-white w-64 h-screen shadow-lg px-4 py-6 hidden md:block">
       <div className="text-xl font-bold mb-8 text-purple-700">UMKM CRM</div>
+
       <nav className="space-y-1">
         {menuItems.map((item) => (
           <Link
@@ -96,7 +103,7 @@ const Sidebar = () => {
         ))}
       </nav>
     </aside>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

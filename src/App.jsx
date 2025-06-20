@@ -1,70 +1,73 @@
-import { Routes, Route } from 'react-router-dom'
-import Dashboard from './Pages/Dashboard'
-import MainLayout from './components/MainLayout'
-import SalesManagement from './Pages/SalesManagement'
-import ProductManagement from './Pages/HaircutServiceManagement'
-import CustomerManagement from './Pages/CustomerManagement'
-import Login from './Pages/SFA/Account/Login'
-import Register from './Pages/SFA/Account/Register'
-import Feedback from './Pages/History/Feedback'
-import VisitHistory from './Pages/History/VisitHistory'
-import Laporan from './Pages/Admin/Laporan'
-import HaircutServiceManagement from './Pages/HaircutServiceManagement'
+import { Routes, Route } from 'react-router-dom';
 
+// Layout
+import MainLayout from './components/MainLayout';
 
-import PaymentCash from './Payment/PaymentCash'
-import PaymentDigital from './Payment/PaymentDigital'
-import PaymentMethod from './Payment/PaymentMethod'
-import OrderBooking from './Pages/SFA/Order/OrderBooking'
-import BookingHistory from './Pages/SFA/BookingHistory/BookingHistory'
-import Login from './Pages/Auth/Login'
-import Register from './Pages/Auth/Register'
-import PromoManagement from './Pages/MA/PromoManagement'
-import LoyaltyProgram from './Pages/MA/LoyaltyProgram'
-import CustomerSegment from './Pages/MA/CustomerSegment'
-import TriggeredPromo from './Pages/MA/TriggeredPromo'
-import PromoDisplay from './Pages/MA/PromoDisplay'
-import UserSegmentInfo from './Pages/MA/UserSegmentInfo'
-import TriggeredPromoInfo from './Pages/MA/TriggeredPromoInfo'
+// Pages Utama
+import Dashboard from './Pages/Dashboard';
+import CustomerManagement from './Pages/CustomerManagement';
+import Feedback from './Pages/History/Feedback';
+import VisitHistory from './Pages/History/VisitHistory';
+import Laporan from './Pages/Admin/Laporan';
+import HaircutServiceManagement from './Pages/HaircutServiceManagement';
+import SalesManagement from './Pages/SalesManagement';
+
+// Payment
+import PaymentCash from './Pages/Payment/PaymentCash';
+import PaymentDigital from './Pages/Payment/PaymentDigital';
+import PaymentMethod from './Pages/Payment/PaymentMethod';
+
+// SFA (Sales & Forecasting Automation)
+import Login from './Pages/SFA/Account/Login';
+import Register from './Pages/SFA/Account/Register';
+
+// MA (Marketing Automation) - Admin
+import PromoManagement from './Pages/MA/PromoManagement';
+import LoyaltyProgram from './Pages/MA/LoyaltyProgram';
+import CustomerSegment from './Pages/MA/CustomerSegment';
+import TriggeredPromo from './Pages/MA/TriggeredPromo';
+
+// MA (Marketing Automation) - User
+import PromoDisplay from './Pages/MA/PromoDisplay';
+import UserSegmentInfo from './Pages/MA/UserSegmentInfo';
+import TriggeredPromoInfo from './Pages/MA/TriggeredPromoInfo';
 
 export function App() {
   return (
     <Routes>
+      {/* ✅ Halaman Login & Register (tanpa layout) */}
       <Route path="/signin" element={<Login />} />
       <Route path="/signup" element={<Register />} />
-      <Route path="/orderbooking" element={<OrderBooking />} />
-      <Route path="/bookinghistory" element={<BookingHistory/>} />
 
+      {/* ✅ Semua halaman utama dalam MainLayout */}
       <Route element={<MainLayout />}>
+        {/* Dashboard & Data */}
         <Route path="/" element={<Dashboard />} />
-         <Route path="/Penjualan" element={<SalesManagement />} />
-         
-           <Route path="/Pelanggan" element={<CustomerManagement/>} />
-           <Route path="/Feedback" element={<Feedback/>} />
-           <Route path="/VisitHistory" element={<VisitHistory/>} />
-            <Route path="/Laporan" element={<Laporan/>} />
-             <Route path="/HaircutServiceManagement" element={<HaircutServiceManagement/>} />
+        <Route path="/pelanggan" element={<CustomerManagement />} />
+        <Route path="/feedback" element={<Feedback />} />
+        <Route path="/visithistory" element={<VisitHistory />} />
+        <Route path="/laporan" element={<Laporan />} />
+        <Route path="/haircutservicemanagement" element={<HaircutServiceManagement />} />
         <Route path="/penjualan" element={<SalesManagement />} />
+
+        {/* Payment */}
         <Route path="/paymentcash" element={<PaymentCash />} />
         <Route path="/paymentdigital" element={<PaymentDigital />} />
-        <Route path="/paymentmethod" element={<PaymentMethod/>} />
+        <Route path="/paymentmethod" element={<PaymentMethod />} />
 
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<Dashboard />} />
+        {/* Marketing Automation - Admin */}
+        <Route path="/promo_management" element={<PromoManagement />} />
+        <Route path="/loyalty_program" element={<LoyaltyProgram />} />
+        <Route path="/customer_segment" element={<CustomerSegment />} />
+        <Route path="/triggered_promo" element={<TriggeredPromo />} />
 
-        {/* Tampilan untuk Admin */}
-        <Route path="/Promo_Management" element={<PromoManagement/>} />
-        <Route path="/Loyalty_Program" element={<LoyaltyProgram/>} />
-        <Route path="/Customer_Segment" element={<CustomerSegment/>} />
-        <Route path="/Triggered_Promo" element={<TriggeredPromo/>} />
-
-        {/* Tampilan untuk User */}
-        <Route path="/Promo_Display" element={<PromoDisplay/>} />
-        <Route path="/UserSegmentInfo" element={<UserSegmentInfo/>} />
-        <Route path="/TriggeredPromoInfo" element={<TriggeredPromoInfo/>} />
+        {/* Marketing Automation - User */}
+        <Route path="/promo_display" element={<PromoDisplay />} />
+        <Route path="/usersegmentinfo" element={<UserSegmentInfo />} />
+        <Route path="/triggeredpromoinfo" element={<TriggeredPromoInfo />} />
       </Route>
     </Routes>
-  )
+  );
 }
 
-export default App
+export default App;
