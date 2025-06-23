@@ -10,9 +10,6 @@ import {
   ShoppingCart
 } from 'lucide-react';
 
-import { BsPeopleFill } from 'react-icons/bs';
-import { FaMoneyBillWave } from 'react-icons/fa';
-import { MdFeedback, MdPhoneIphone, MdPayment } from 'react-icons/md';
 import {
   LuBadgePercent,
   LuGift,
@@ -21,6 +18,12 @@ import {
   LuUserCheck,
   LuBolt
 } from 'react-icons/lu';
+
+import { BsPeopleFill } from 'react-icons/bs';
+import { FaMoneyBillWave } from 'react-icons/fa';
+import { FaPeopleCarryBox } from 'react-icons/fa6';
+import { MdFeedback, MdPhoneIphone, MdPayment, MdOutlineAddShoppingCart } from 'react-icons/md';
+import { FaRegListAlt } from 'react-icons/fa';
 
 import { Link, useLocation } from 'react-router-dom';
 
@@ -39,6 +42,18 @@ const menuItems = [
   { name: 'Promo Display', icon: <Percent />, path: '/promo_display' },
   { name: 'User Segment Info', icon: <LuUserCheck />, path: '/usersegmentinfo' },
   { name: 'Triggered Promo Info', icon: <LuBolt />, path: '/triggeredpromoinfo' },
+
+  // Additional Menu
+  { name: 'Payment Cash', icon: <FaMoneyBillWave />, path: '/paymentcash' },
+  { name: 'Payment Digital', icon: <MdPhoneIphone />, path: '/paymentdigital' },
+  { name: 'Payment Method', icon: <MdPayment />, path: '/paymentmethod' },
+  { name: 'Antrian Layanan', icon: <BsPeopleFill />, path: '/servicequeue' },
+  { name: 'Status Layanan', icon: <FaPeopleCarryBox />, path: '/servicestatus' },
+  { name: 'Tagihan', icon: <FaMoneyBillWave />, path: '/invoicepage' },
+  { name: 'Notifikasi', icon: <MdPhoneIphone />, path: '/notificationpage' },
+  { name: 'Pemesanan Layanan', icon: <MdOutlineAddShoppingCart />, path: '/booking' },
+  { name: 'Status Layanan Saya', icon: <FaRegListAlt />, path: '/userstatus' },
+  { name: 'Notifikasi User', icon: <MdPhoneIphone />, path: '/notificationpageuser' },
 ];
 
 const accountItems = [

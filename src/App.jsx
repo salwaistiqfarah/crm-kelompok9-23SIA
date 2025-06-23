@@ -31,6 +31,16 @@ import TriggeredPromo from './Pages/MA/TriggeredPromo';
 import PromoDisplay from './Pages/MA/PromoDisplay';
 import UserSegmentInfo from './Pages/MA/UserSegmentInfo';
 import TriggeredPromoInfo from './Pages/MA/TriggeredPromoInfo';
+import PaymentCash from './Payment/PaymentCash'
+import PaymentDigital from './Payment/PaymentDigital'
+import PaymentMethod from './Payment/PaymentMethod'
+import ServiceQueue from './Pages/SA/ServiceQueue'
+import ServiceStatus from './Pages/SA/ServiceStatus'
+import InvoicePage from './Pages/SA/InvoicePage'
+import NotificationPage from './Pages/SA/NotificationPage'
+import OrderBooking from './Pages/SA/OrderBooking'
+import ServisStatusUser from './Pages/SA/ServisStatusUser'
+import NotificationPageUser from './Pages/SA/NotificationPageUser'
 
 export function App() {
   return (
@@ -64,6 +74,24 @@ export function App() {
         <Route path="/promo_display" element={<PromoDisplay />} />
         <Route path="/usersegmentinfo" element={<UserSegmentInfo />} />
         <Route path="/triggeredpromoinfo" element={<TriggeredPromoInfo />} />
+        <Route path="/Penjualan" element={<SalesManagement />} />
+        <Route path="/servicequeue" element={<ServiceQueue />} />
+        <Route path="/servicestatus" element={<ServiceStatus />} />
+        <Route path="/invoicepage" element={<InvoicePage />} />
+        <Route path="/notificationpage" element={<NotificationPage />} />
+            <Route path="/booking" element={<OrderBooking />} />
+<Route path="/userstatus" element={<ServisStatusUser />} />
+        <Route path="/notificationpageuser" element={<NotificationPageUser />} />
+
+        <Route path="/Pelanggan" element={<CustomerManagement />} />
+        <Route path="/Feedback" element={<Feedback />} />
+        <Route path="/VisitHistory" element={<VisitHistory />} />
+        <Route path="/Laporan" element={<Laporan />} />
+        <Route path="/HaircutServiceManagement" element={<HaircutServiceManagement />} />
+        <Route path="/penjualan" element={<SalesManagement />} />
+        <Route path="/paymentcash" element={<PaymentCash />} />
+        <Route path="/paymentdigital" element={<PaymentDigital />} />
+        <Route path="/paymentmethod" element={<PaymentMethod />} />
       </Route>
     </Routes>
   );
