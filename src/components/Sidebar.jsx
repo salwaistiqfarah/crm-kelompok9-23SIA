@@ -13,7 +13,6 @@ import {
 import { BsPeopleFill } from 'react-icons/bs';
 import { FaMoneyBillWave } from 'react-icons/fa';
 import { MdFeedback, MdPhoneIphone, MdPayment } from 'react-icons/md';
-
 import {
   LuBadgePercent,
   LuGift,
@@ -61,11 +60,10 @@ const accountItems = [
 
 const Sidebar = () => {
   const location = useLocation();
-
   const isActive = (path) => location.pathname === path;
 
   return (
-    <aside className="bg-white w-64 h-screen shadow-lg px-4 py-6 hidden md:block">
+    <aside className="bg-white w-64 h-screen shadow-lg px-4 py-6 block">
       <div className="text-xl font-bold mb-8 text-purple-700">UMKM CRM</div>
 
       <nav className="space-y-1">

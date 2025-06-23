@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 // Layout
 import MainLayout from './components/MainLayout';
 
-// Pages Utama
+// Pages Umum
 import Dashboard from './Pages/Dashboard';
 import CustomerManagement from './Pages/CustomerManagement';
 import Feedback from './Pages/History/Feedback';
@@ -17,17 +17,17 @@ import PaymentCash from './Pages/Payment/PaymentCash';
 import PaymentDigital from './Pages/Payment/PaymentDigital';
 import PaymentMethod from './Pages/Payment/PaymentMethod';
 
-// SFA (Sales & Forecasting Automation)
+// Auth
 import Login from './Pages/SFA/Account/Login';
 import Register from './Pages/SFA/Account/Register';
 
-// MA (Marketing Automation) - Admin
+// MA - Admin
 import PromoManagement from './Pages/MA/PromoManagement';
 import LoyaltyProgram from './Pages/MA/LoyaltyProgram';
 import CustomerSegment from './Pages/MA/CustomerSegment';
 import TriggeredPromo from './Pages/MA/TriggeredPromo';
 
-// MA (Marketing Automation) - User
+// MA - User
 import PromoDisplay from './Pages/MA/PromoDisplay';
 import UserSegmentInfo from './Pages/MA/UserSegmentInfo';
 import TriggeredPromoInfo from './Pages/MA/TriggeredPromoInfo';
@@ -35,13 +35,12 @@ import TriggeredPromoInfo from './Pages/MA/TriggeredPromoInfo';
 export function App() {
   return (
     <Routes>
-      {/* ✅ Halaman Login & Register (tanpa layout) */}
+      {/* Auth Pages (di luar layout utama) */}
       <Route path="/signin" element={<Login />} />
       <Route path="/signup" element={<Register />} />
 
-      {/* ✅ Semua halaman utama dalam MainLayout */}
+      {/* Halaman dengan layout utama */}
       <Route element={<MainLayout />}>
-        {/* Dashboard & Data */}
         <Route path="/" element={<Dashboard />} />
         <Route path="/pelanggan" element={<CustomerManagement />} />
         <Route path="/feedback" element={<Feedback />} />
@@ -51,17 +50,17 @@ export function App() {
         <Route path="/penjualan" element={<SalesManagement />} />
 
         {/* Payment */}
-        <Route path="/paymentcash" element={<PaymentCash />} />
-        <Route path="/paymentdigital" element={<PaymentDigital />} />
-        <Route path="/paymentmethod" element={<PaymentMethod />} />
+        <Route path="/paymentcash" element={<PaymentCash/>} />
+        <Route path="/paymentdigital" element={<PaymentMethod/>} />
+        <Route path="/paymentmethod" element={<PaymentDigital/>} />
 
-        {/* Marketing Automation - Admin */}
+        {/* MA - Admin */}
         <Route path="/promo_management" element={<PromoManagement />} />
         <Route path="/loyalty_program" element={<LoyaltyProgram />} />
         <Route path="/customer_segment" element={<CustomerSegment />} />
         <Route path="/triggered_promo" element={<TriggeredPromo />} />
 
-        {/* Marketing Automation - User */}
+        {/* MA - User */}
         <Route path="/promo_display" element={<PromoDisplay />} />
         <Route path="/usersegmentinfo" element={<UserSegmentInfo />} />
         <Route path="/triggeredpromoinfo" element={<TriggeredPromoInfo />} />
