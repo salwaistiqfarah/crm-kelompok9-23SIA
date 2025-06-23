@@ -1,47 +1,75 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { LogIn } from 'lucide-react'
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { LogIn } from 'lucide-react';
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const navigate = useNavigate()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  // Redirect otomatis jika sudah login
+  useEffect(() => {
+    const role = localStorage.getItem('role');
+
+    // Cegah redirect saat sedang di halaman login
+    if (role && window.location.pathname === '/signin') return;
+
+    if (role === 'admin') {
+      navigate('/admin/laporan');
+    } else if (role === 'user') {
+      navigate('/user/booking');
+    }
+  }, [navigate]);
 
   const handleLogin = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
+    let role = '';
     if (email === 'admin@example.com' && password === 'admin123') {
-      localStorage.setItem('admin', JSON.stringify({ email }))
-      navigate('/')
+      role = 'admin';
+    } else if (email === 'user@example.com' && password === 'user123') {
+      role = 'user';
     } else {
-      setError('Email atau password salah!')
+      setError('Email atau password salah!');
+      return;
     }
-  }
+
+    // Simpan role dan user info
+    localStorage.setItem('role', role);
+    localStorage.setItem('user', JSON.stringify({ email }));
+
+    // Arahkan ke halaman sesuai role
+    if (role === 'admin') {
+      navigate('/admin/laporan');
+    } else {
+      navigate('/user/booking');
+    }
+  };
 
   return (
     <div className="flex min-h-screen">
-      {/* Left Side Illustration or Branding */}
+      {/* Ilustrasi Kiri */}
       <div className="hidden md:flex w-1/2 bg-purple-700 items-center justify-center p-10">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-white mb-4">BARBER STC</h1>
           <p className="text-purple-200 text-lg">
-            Selamat datang kembali! Silakan login untuk mengelola dashboard admin Anda.
+            Selamat datang kembali! Silakan login untuk mengelola dashboard Anda.
           </p>
           <img
             src="https://cdni.iconscout.com/illustration/premium/thumb/admin-login-4489145-3723273.png"
-            alt="Admin Login"
+            alt="Login Illustration"
             className="mt-10 max-w-xs"
           />
         </div>
       </div>
 
-      {/* Right Side Form */}
+      {/* Form Login */}
       <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-50 p-8">
         <form onSubmit={handleLogin} className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
           <div className="flex items-center gap-2 mb-6">
             <LogIn className="text-purple-600" />
-            <h2 className="text-2xl font-semibold text-gray-800">Login Admin</h2>
+            <h2 className="text-2xl font-semibold text-gray-800">Login</h2>
           </div>
 
           {error && (
@@ -89,7 +117,7 @@ const Login = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

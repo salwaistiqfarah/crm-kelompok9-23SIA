@@ -1,98 +1,86 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 // Layout
-import MainLayout from './components/MainLayout';
+import AdminLayout from './components/AdminLayout';
+import UserLayout from './components/UserLayout';
+import RoleBasedRoute from './components/RoleBasedRoute';
 
-// Pages Umum
-import Dashboard from './Pages/Dashboard';
+// Auth
+import Login from './Pages/SFA/Account/Login';
+import Register from './Pages/SFA/Account/Register';
+
+// Admin Pages
+import Dashboard from './Pages/Admin/Dashboard';
 import CustomerManagement from './Pages/CustomerManagement';
 import Feedback from './Pages/History/Feedback';
 import VisitHistory from './Pages/History/VisitHistory';
 import Laporan from './Pages/Admin/Laporan';
 import HaircutServiceManagement from './Pages/HaircutServiceManagement';
 import SalesManagement from './Pages/SalesManagement';
-
-// Payment
 import PaymentCash from './Pages/Payment/PaymentCash';
 import PaymentDigital from './Pages/Payment/PaymentDigital';
 import PaymentMethod from './Pages/Payment/PaymentMethod';
-
-// Auth
-import Login from './Pages/SFA/Account/Login';
-import Register from './Pages/SFA/Account/Register';
-
-// MA - Admin
 import PromoManagement from './Pages/MA/PromoManagement';
-import LoyaltyProgram from './Pages/MA/LoyaltyProgram';
 import CustomerSegment from './Pages/MA/CustomerSegment';
 import TriggeredPromo from './Pages/MA/TriggeredPromo';
+import ServiceQueue from './Pages/SA/ServiceQueue';
+import ServiceStatus from './Pages/SA/ServiceStatus';
+import InvoicePage from './Pages/SA/InvoicePage';
+import NotificationPage from './Pages/SA/NotificationPage';
 
-// MA - User
+// User Pages
+import OrderBooking from './Pages/OrderBooking';
+import ServisStatusUser from './Pages/SA/ServisStatusUser';
+import NotificationPageUser from './Pages/SA/NotificationPageUser';
 import PromoDisplay from './Pages/MA/PromoDisplay';
 import UserSegmentInfo from './Pages/MA/UserSegmentInfo';
 import TriggeredPromoInfo from './Pages/MA/TriggeredPromoInfo';
-import PaymentCash from './Payment/PaymentCash'
-import PaymentDigital from './Payment/PaymentDigital'
-import PaymentMethod from './Payment/PaymentMethod'
-import ServiceQueue from './Pages/SA/ServiceQueue'
-import ServiceStatus from './Pages/SA/ServiceStatus'
-import InvoicePage from './Pages/SA/InvoicePage'
-import NotificationPage from './Pages/SA/NotificationPage'
-import OrderBooking from './Pages/SA/OrderBooking'
-import ServisStatusUser from './Pages/SA/ServisStatusUser'
-import NotificationPageUser from './Pages/SA/NotificationPageUser'
+import LoyaltyProgram from './Pages/MA/LoyaltyProgram';
 
 export function App() {
   return (
     <Routes>
-      {/* Auth Pages (di luar layout utama) */}
+      {/* Redirect root path to login */}
+      <Route path="/" element={<Navigate to="/signin" />} />
+
+      {/* Auth Pages (no layout) */}
       <Route path="/signin" element={<Login />} />
       <Route path="/signup" element={<Register />} />
 
-      {/* Halaman dengan layout utama */}
-      <Route element={<MainLayout />}>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/pelanggan" element={<CustomerManagement />} />
-        <Route path="/feedback" element={<Feedback />} />
-        <Route path="/visithistory" element={<VisitHistory />} />
-        <Route path="/laporan" element={<Laporan />} />
-        <Route path="/haircutservicemanagement" element={<HaircutServiceManagement />} />
-        <Route path="/penjualan" element={<SalesManagement />} />
-
-        {/* Payment */}
-        <Route path="/paymentcash" element={<PaymentCash/>} />
-        <Route path="/paymentdigital" element={<PaymentMethod/>} />
-        <Route path="/paymentmethod" element={<PaymentDigital/>} />
-
-        {/* MA - Admin */}
-        <Route path="/promo_management" element={<PromoManagement />} />
-        <Route path="/loyalty_program" element={<LoyaltyProgram />} />
-        <Route path="/customer_segment" element={<CustomerSegment />} />
-        <Route path="/triggered_promo" element={<TriggeredPromo />} />
-
-        {/* MA - User */}
-        <Route path="/promo_display" element={<PromoDisplay />} />
-        <Route path="/usersegmentinfo" element={<UserSegmentInfo />} />
-        <Route path="/triggeredpromoinfo" element={<TriggeredPromoInfo />} />
-        <Route path="/Penjualan" element={<SalesManagement />} />
-        <Route path="/servicequeue" element={<ServiceQueue />} />
-        <Route path="/servicestatus" element={<ServiceStatus />} />
-        <Route path="/invoicepage" element={<InvoicePage />} />
-        <Route path="/notificationpage" element={<NotificationPage />} />
-            <Route path="/booking" element={<OrderBooking />} />
-<Route path="/userstatus" element={<ServisStatusUser />} />
-        <Route path="/notificationpageuser" element={<NotificationPageUser />} />
-
-        <Route path="/Pelanggan" element={<CustomerManagement />} />
-        <Route path="/Feedback" element={<Feedback />} />
-        <Route path="/VisitHistory" element={<VisitHistory />} />
-        <Route path="/Laporan" element={<Laporan />} />
-        <Route path="/HaircutServiceManagement" element={<HaircutServiceManagement />} />
-        <Route path="/penjualan" element={<SalesManagement />} />
-        <Route path="/paymentcash" element={<PaymentCash />} />
-        <Route path="/paymentdigital" element={<PaymentDigital />} />
-        <Route path="/paymentmethod" element={<PaymentMethod />} />
+      {/* Admin Routes */}
+      <Route element={<RoleBasedRoute role="admin"><AdminLayout /></RoleBasedRoute>}>
+        <Route path="/admin/pelanggan" element={<CustomerManagement />} />
+        <Route path="/admin/feedback" element={<Feedback />} />
+        <Route path="/admin/visithistory" element={<VisitHistory />} />
+        <Route path="/admin/laporan" element={<Laporan />} />
+        <Route path="/admin/haircutservicemanagement" element={<HaircutServiceManagement />} />
+        <Route path="/admin/penjualan" element={<SalesManagement />} />
+        <Route path="/admin/paymentcash" element={<PaymentCash />} />
+        <Route path="/admin/paymentdigital" element={<PaymentDigital />} />
+        <Route path="/admin/paymentmethod" element={<PaymentMethod />} />
+        <Route path="/admin/promo_management" element={<PromoManagement />} />
+        <Route path="/admin/customer_segment" element={<CustomerSegment />} />
+        <Route path="/admin/triggered_promo" element={<TriggeredPromo />} />
+        <Route path="/admin/servicequeue" element={<ServiceQueue />} />
+        <Route path="/admin/servicestatus" element={<ServiceStatus />} />
+        <Route path="/admin/invoicepage" element={<InvoicePage />} />
+        <Route path="/admin/notificationpage" element={<NotificationPage />} />
       </Route>
+
+      {/* User Routes */}
+      <Route element={<RoleBasedRoute role="user"><UserLayout /></RoleBasedRoute>}>
+      n <Route path="/user/dashboard" element={<Dashboard />} />
+        <Route path="/user/booking" element={<OrderBooking />} />
+        <Route path="/user/status" element={<ServisStatusUser />} />
+        <Route path="/user/notification" element={<NotificationPageUser />} />
+        <Route path="/user/promo_display" element={<PromoDisplay />} />
+        <Route path="/user/usersegmentinfo" element={<UserSegmentInfo />} />
+        <Route path="/user/triggeredpromoinfo" element={<TriggeredPromoInfo />} />
+        <Route path="/user/loyalty_program" element={<LoyaltyProgram />} />
+      </Route>
+
+      {/* Optional fallback route */}
+      <Route path="*" element={<Navigate to="/signin" />} />
     </Routes>
   );
 }

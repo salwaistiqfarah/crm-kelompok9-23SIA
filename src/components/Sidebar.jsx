@@ -29,7 +29,6 @@ import { Link, useLocation } from 'react-router-dom';
 
 const menuItems = [
   { name: 'Dashboard', icon: <LayoutDashboard />, path: '/' },
-  { name: 'Layanan Potong Rambut', icon: <Box />, path: '/haircutservicemanagement' },
   { name: 'Laporan', icon: <BarChart2 />, path: '/laporan' },
 
   // MA - Admin
@@ -44,9 +43,6 @@ const menuItems = [
   { name: 'Triggered Promo Info', icon: <LuBolt />, path: '/triggeredpromoinfo' },
 
   // Additional Menu
-  { name: 'Payment Cash', icon: <FaMoneyBillWave />, path: '/paymentcash' },
-  { name: 'Payment Digital', icon: <MdPhoneIphone />, path: '/paymentdigital' },
-  { name: 'Payment Method', icon: <MdPayment />, path: '/paymentmethod' },
   { name: 'Antrian Layanan', icon: <BsPeopleFill />, path: '/servicequeue' },
   { name: 'Status Layanan', icon: <FaPeopleCarryBox />, path: '/servicestatus' },
   { name: 'Tagihan', icon: <FaMoneyBillWave />, path: '/invoicepage' },
