@@ -26,19 +26,8 @@ import { Link, useLocation } from 'react-router-dom';
 
 const menuItems = [
   { name: 'Dashboard', icon: <LayoutDashboard />, path: '/' },
-  { name: 'Pelanggan', icon: <BsPeopleFill />, path: '/pelanggan' },
   { name: 'Layanan Potong Rambut', icon: <Box />, path: '/haircutservicemanagement' },
   { name: 'Laporan', icon: <BarChart2 />, path: '/laporan' },
-  { name: 'Penjualan', icon: <ShoppingCart />, path: '/penjualan' },
-
-  // SFA
-  { name: 'Feedback', icon: <MdFeedback />, path: '/feedback' },
-  { name: 'Visit History', icon: <HistoryIcon />, path: '/visithistory' },
-
-  // Payment
-  { name: 'Payment Cash', icon: <FaMoneyBillWave />, path: '/paymentcash' },
-  { name: 'Payment Digital', icon: <MdPhoneIphone />, path: '/paymentdigital' },
-  { name: 'Payment Method', icon: <MdPayment />, path: '/paymentmethod' },
 
   // MA - Admin
   { name: 'Promo Management', icon: <LuBadgePercent />, path: '/promo_management' },
