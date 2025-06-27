@@ -6,15 +6,14 @@ import UserLayout from './components/UserLayout';
 import RoleBasedRoute from './components/RoleBasedRoute';
 
 // Auth
-import Login from './Pages/SFA/Account/Login';
-import Register from './Pages/SFA/Account/Register';
+import Login from './Pages/SFA/Login';
+import Register from './Pages/SFA/Register';
 
 // Admin Pages
 import Dashboard from './Pages/Admin/Dashboard';
 import CustomerManagement from './Pages/CustomerManagement';
 import Feedback from './Pages/History/Feedback';
 import VisitHistory from './Pages/History/VisitHistory';
-import Laporan from './Pages/Admin/Laporan';
 import HaircutServiceManagement from './Pages/HaircutServiceManagement';
 import SalesManagement from './Pages/SalesManagement';
 import PaymentCash from './Pages/Payment/PaymentCash';
@@ -28,14 +27,18 @@ import ServiceStatus from './Pages/SA/ServiceStatus';
 import InvoicePage from './Pages/SA/InvoicePage';
 import NotificationPage from './Pages/SA/NotificationPage';
 
+
 // User Pages
-import OrderBooking from './Pages/OrderBooking';
+import OrderBooking from './Pages/SFA/OrderBooking';
 import ServisStatusUser from './Pages/SA/ServisStatusUser';
 import NotificationPageUser from './Pages/SA/NotificationPageUser';
 import PromoDisplay from './Pages/MA/PromoDisplay';
 import UserSegmentInfo from './Pages/MA/UserSegmentInfo';
 import TriggeredPromoInfo from './Pages/MA/TriggeredPromoInfo';
 import LoyaltyProgram from './Pages/MA/LoyaltyProgram';
+import UserA from './Pages/UserA';
+import WeeklyForecast from './Pages/SFA/WeeklyForecast';
+import BookingHistory from './Pages/SFA/BookingHistory';
 
 export function App() {
   return (
@@ -52,7 +55,8 @@ export function App() {
         <Route path="/admin/pelanggan" element={<CustomerManagement />} />
         <Route path="/admin/feedback" element={<Feedback />} />
         <Route path="/admin/visithistory" element={<VisitHistory />} />
-        <Route path="/admin/laporan" element={<Laporan />} />
+        <Route path="/admin/weeklyforecast" element={<WeeklyForecast />} />
+        <Route path="/admin/userA" element={<UserA />} />
         <Route path="/admin/haircutservicemanagement" element={<HaircutServiceManagement />} />
         <Route path="/admin/penjualan" element={<SalesManagement />} />
         <Route path="/admin/paymentcash" element={<PaymentCash />} />
@@ -65,6 +69,8 @@ export function App() {
         <Route path="/admin/servicestatus" element={<ServiceStatus />} />
         <Route path="/admin/invoicepage" element={<InvoicePage />} />
         <Route path="/admin/notificationpage" element={<NotificationPage />} />
+        <Route path="/admin/bookinghistory" element={<BookingHistory/>} />
+         <Route path="/admin/loyalty_program" element={<LoyaltyProgram />} />
       </Route>
 
       {/* User Routes */}

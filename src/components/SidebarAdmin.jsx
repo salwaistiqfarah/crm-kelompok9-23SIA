@@ -3,6 +3,7 @@ import {
   LogIn,
   UserPlus,
   BarChart2,
+  User,
 } from 'lucide-react';
 
 import {
@@ -24,7 +25,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 // ✅ MENU UTAMA ADMIN
 const adminMenu = [,
-  { name: 'Laporan', icon: <BarChart2 />, path: '/admin/laporan' },
+  { name: 'Laporan', icon: <BarChart2 />, path: '/admin/weeklyForecast' },
   { name: 'Promo Management', icon: <LuBadgePercent />, path: '/admin/promo_management' },
   { name: 'Loyalty Program', icon: <LuGift />, path: '/admin/loyalty_program' },
   { name: 'Customer Segment', icon: <LuUsers />, path: '/admin/customer_segment' },
@@ -33,12 +34,15 @@ const adminMenu = [,
   { name: 'Status Layanan', icon: <FaClipboardList />, path: '/admin/servicestatus' },
   { name: 'Tagihan (Invoice)', icon: <FaMoneyBillWave />, path: '/admin/invoicepage' },
   { name: 'Notifikasi', icon: <MdPhoneIphone />, path: '/admin/notificationpage' },
+  { name: 'Booking History', icon: <FaClipboardList />, path: '/admin/BookingHistory' },
+
+  // { name: 'UserA', icon: <User />, path: '"/admin/UserA" ' },
 ];
 
 // ✅ MENU AKUN
 const accountItems = [
-  { name: 'Sign In', icon: <LogIn />, path: '/signin' },
-  { name: 'Sign Up', icon: <UserPlus />, path: '/signup' },
+  // { name: 'Sign In', icon: <LogIn />, path: '/signin' },
+  // { name: 'Sign Up', icon: <UserPlus />, path: '/signup' },
 ];
 
 const SidebarAdmin = () => {
