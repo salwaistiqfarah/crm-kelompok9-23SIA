@@ -1,30 +1,23 @@
 import {
-  LayoutDashboard,
-  LogIn,
-  UserPlus,
   BarChart2,
-  User,
 } from 'lucide-react';
-
 import {
   LuBadgePercent,
   LuGift,
   LuUsers,
   LuZap,
 } from 'react-icons/lu';
-
 import {
   FaMoneyBillWave,
   FaClipboardList,
 } from 'react-icons/fa';
-
 import { BsPeopleFill } from 'react-icons/bs';
 import { MdPhoneIphone } from 'react-icons/md';
 
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import logo from '../assets/logobarber.jpg';
 
-// ✅ MENU UTAMA ADMIN
-const adminMenu = [,
+const adminMenu = [
   { name: 'Laporan', icon: <BarChart2 />, path: '/admin/weeklyForecast' },
   { name: 'Promo Management', icon: <LuBadgePercent />, path: '/admin/promo_management' },
   { name: 'Loyalty Program', icon: <LuGift />, path: '/admin/loyalty_program' },
@@ -33,16 +26,8 @@ const adminMenu = [,
   { name: 'Antrian Layanan', icon: <BsPeopleFill />, path: '/admin/servicequeue' },
   { name: 'Status Layanan', icon: <FaClipboardList />, path: '/admin/servicestatus' },
   { name: 'Tagihan (Invoice)', icon: <FaMoneyBillWave />, path: '/admin/invoicepage' },
-  { name: 'Notifikasi', icon: <MdPhoneIphone />, path: '/admin/notificationpage' },
+  // { name: 'Notifikasi', icon: <MdPhoneIphone />, path: '/admin/notificationpage' },
   { name: 'Booking History', icon: <FaClipboardList />, path: '/admin/BookingHistory' },
-
-  // { name: 'UserA', icon: <User />, path: '"/admin/UserA" ' },
-];
-
-// ✅ MENU AKUN
-const accountItems = [
-  // { name: 'Sign In', icon: <LogIn />, path: '/signin' },
-  // { name: 'Sign Up', icon: <UserPlus />, path: '/signup' },
 ];
 
 const SidebarAdmin = () => {
@@ -51,7 +36,6 @@ const SidebarAdmin = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  // ✅ LOGOUT
   const handleLogout = () => {
     localStorage.removeItem('role');
     localStorage.removeItem('user');
@@ -59,51 +43,44 @@ const SidebarAdmin = () => {
   };
 
   return (
-    <aside className="bg-white w-64 h-screen shadow-lg px-4 py-6 block">
-      <div className="text-xl font-bold mb-8 text-purple-700">Admin Panel</div>
+    <aside className="bg-white w-64 h-screen shadow-md px-4 py-6">
+      {/* Logo dan Judul */}
+      <div className="flex flex-col items-center mb-6">
+        <img
+          src={logo}
+          alt="Barbershop Logo"
+          className="w-20 h-20 object-cover rounded-full border border-[#A67C52]"
+        />
+    
+      </div>
 
-      <nav className="space-y-1">
+      {/* Menu Navigasi */}
+      <nav className="space-y-2">
         {adminMenu.map((item) => (
           <Link
             key={item.name}
             to={item.path}
-            className={`flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-purple-100 transition ${
+            className={`flex items-center gap-3 px-3 py-2 rounded-lg transition ${
               isActive(item.path)
-                ? 'bg-purple-200 text-purple-800 font-semibold'
-                : 'text-gray-700'
+                ? 'bg-[#f0f0f0] text-[#333333] font-semibold'
+                : 'text-[#000000] hover:bg-gray-100'
             }`}
           >
-            <span className="w-5 h-5">{item.icon}</span>
-            {item.name}
+            <span className="w-5 h-5 text-[#A67C52]">{item.icon}</span>
+            <span className="text-sm">{item.name}</span>
           </Link>
         ))}
       </nav>
 
-      <div className="mt-8 text-xs font-semibold text-gray-500">AKUN</div>
-      <nav className="mt-2 space-y-1">
-        {accountItems.map((item) => (
-          <Link
-            key={item.name}
-            to={item.path}
-            className={`flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-purple-100 transition ${
-              isActive(item.path)
-                ? 'bg-purple-200 text-purple-800 font-semibold'
-                : 'text-gray-700'
-            }`}
-          >
-            <span className="w-5 h-5">{item.icon}</span>
-            {item.name}
-          </Link>
-        ))}
-
-        {/* 🔴 LOGOUT BUTTON */}
+      {/* Tombol Logout */}
+      <div className="mt-10">
         <button
           onClick={handleLogout}
-          className="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg text-red-600 hover:bg-red-100 transition mt-4"
+          className="w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg text-white-600 hover:bg-red-100 transition"
         >
-          🚪 Logout
+          🚪 <span className="text-sm font-semibold">Logout</span>
         </button>
-      </nav>
+      </div>
     </aside>
   );
 };

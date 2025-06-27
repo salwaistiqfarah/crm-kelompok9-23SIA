@@ -1,100 +1,182 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import { Search } from "lucide-react";
 
-// Simulasi data user (bisa diganti dari auth context atau API)
-const currentUser = {
-  name: "Jelly",
-  role: "user", // ubah jadi "admin" untuk lihat tampilan admin
-};
+const initialUsers = [
+  {
+    id: 1,
+    name: "Budi Santoso",
+    avatar: "https://i.pravatar.cc/150?img=11",
+    service: "Cukur + Cuci",
+    points: 120,
+    status: "Silver",
+    active: true,
+  },
+  {
+    id: 2,
+    name: "Sari Oktaviani",
+    avatar: "https://i.pravatar.cc/150?img=12",
+    service: "Hair Coloring",
+    points: 210,
+    status: "Gold",
+    active: true,
+  },
+  {
+    id: 3,
+    name: "Andi Prakoso",
+    avatar: "https://i.pravatar.cc/150?img=13",
+    service: "Facial Treatment",
+    points: 340,
+    status: "Platinum",
+    active: false,
+  },
+  {
+    id: 4,
+    name: "Nina Ayu",
+    avatar: "https://i.pravatar.cc/150?img=14",
+    service: "Cukur Pria",
+    points: 90,
+    status: "Silver",
+    active: true,
+  },
+  {
+    id: 5,
+    name: "Dodi Firmansyah",
+    avatar: "https://i.pravatar.cc/150?img=15",
+    service: "Hair Spa",
+    points: 180,
+    status: "Gold",
+    active: true,
+  },
+];
+
+const COLORS = ["#6366f1", "#d1d5db"];
 
 const LoyaltyProgram = () => {
-  const [userRole, setUserRole] = useState("user"); // default "user"
-  const [userPoints, setUserPoints] = useState(120); // contoh poin
-  const pointHistory = [
-    { id: 1, action: "Transaksi Rp50.000", change: "+5 poin", date: "2025-06-10" },
-    { id: 2, action: "Tukar 100 poin - Diskon", change: "-100 poin", date: "2025-06-14" },
+  const [users, setUsers] = useState(initialUsers);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [search, setSearch] = useState("");
+
+  const pieData = [
+    { name: "Active users", value: users.filter((u) => u.active).length },
+    { name: "Inactive users", value: users.filter((u) => !u.active).length },
   ];
 
-  useEffect(() => {
-    // Simulasi ambil role user dari backend/context
-    setUserRole(currentUser.role);
-  }, []);
+  const handleStatusChange = (id, newStatus) => {
+    setUsers((prev) =>
+      prev.map((u) => (u.id === id ? { ...u, status: newStatus } : u))
+    );
+  };
 
-  const isAdmin = userRole === "admin";
+  const filteredUsers = users.filter((u) =>
+    u.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-gray-800">Program Loyalitas</h1>
+      <h1 className="text-2xl font-bold text-gray-800 mb-4">Loyalty & Reward Management</h1>
 
-      <div className="bg-white shadow-lg rounded-2xl p-6 space-y-4">
-        {!isAdmin ? (
-          <>
-            {/* --- USER VIEW --- */}
-            <p className="text-gray-700 text-lg leading-relaxed">
-              Dapatkan 1 poin untuk setiap transaksi Rp10.000. Tukarkan poin untuk diskon atau layanan gratis.
-            </p>
-
-            <div className="bg-indigo-100 rounded-xl p-4 text-indigo-800 font-semibold">
-              Jumlah Poin Anda: {userPoints} poin
-            </div>
-
-            <div>
-              <h2 className="text-lg font-semibold mb-2">Riwayat Poin</h2>
-              <ul className="text-gray-700 space-y-1">
-                {pointHistory.map((item) => (
-                  <li key={item.id} className="flex justify-between border-b py-1">
-                    <span>{item.action} ({item.date})</span>
-                    <span className="font-medium">{item.change}</span>
-                  </li>
+      <div className="grid md:grid-cols-4 gap-6">
+        <div className="bg-white p-4 rounded-xl shadow-md col-span-1">
+          <h2 className="text-sm font-semibold text-gray-600 mb-2">User Statistics</h2>
+          <ResponsiveContainer width="100%" height={150}>
+            <PieChart>
+              <Pie
+                data={pieData}
+                cx="50%"
+                cy="50%"
+                innerRadius={40}
+                outerRadius={55}
+                fill="#8884d8"
+                paddingAngle={2}
+                dataKey="value"
+              >
+                {pieData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
-              </ul>
-            </div>
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+          <p className="text-center text-sm mt-2">
+            <span className="text-indigo-600 font-bold text-xl">{users.length}</span> total users
+          </p>
+          <div className="flex justify-center gap-4 text-sm mt-2">
+            <span className="text-indigo-600">● Active</span>
+            <span className="text-gray-400">● Inactive</span>
+          </div>
+        </div>
 
-            <div>
-              <h2 className="text-xl font-semibold mt-6 mb-2">Reward yang Tersedia:</h2>
-              <ul className="list-disc list-inside text-gray-600">
-                <li>50 poin: Cuci rambut gratis</li>
-                <li>100 poin: Diskon 30%</li>
-                <li>150 poin: Potong rambut gratis</li>
-              </ul>
-            </div>
-          </>
-        ) : (
-          <>
-            {/* --- ADMIN VIEW --- */}
-            <h2 className="text-lg font-semibold mb-2">Pengaturan Sistem Poin</h2>
-            <ul className="text-gray-700 list-disc list-inside">
-              <li>1 poin per transaksi Rp10.000</li>
-              <li>Batas penukaran: minimal 50 poin</li>
-              <li>Reward dapat dikonfigurasi via dashboard admin</li>
-            </ul>
+        <div className="col-span-3">
+          <div className="relative mb-4">
+            <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Cari nama pelanggan..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-10 pr-4 py-2 w-full text-sm border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            />
+          </div>
 
-            <div className="mt-6">
-              <h2 className="text-lg font-semibold mb-2">Monitoring Poin Pengguna</h2>
-              <table className="w-full text-left text-sm text-gray-700 border">
-                <thead className="bg-gray-100">
-                  <tr>
-                    <th className="px-4 py-2">Nama</th>
-                    <th className="px-4 py-2">Poin</th>
-                    <th className="px-4 py-2">Terakhir Ditukar</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="px-4 py-2">Budi</td>
-                    <td className="px-4 py-2">120</td>
-                    <td className="px-4 py-2">2025-06-14</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Sari</td>
-                    <td className="px-4 py-2">60</td>
-                    <td className="px-4 py-2">2025-06-11</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </>
-        )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            {filteredUsers.map((user) => (
+              <div
+                key={user.id}
+                onClick={() => setSelectedUser(user)}
+                className="bg-white rounded-xl shadow-md p-4 cursor-pointer hover:shadow-lg transition"
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <img
+                    src={user.avatar}
+                    alt={user.name}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="font-semibold text-gray-800">{user.name}</p>
+                    <p className="text-xs text-gray-500">{user.service}</p>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-700 mb-1">Poin: {user.points}</p>
+                <p className="text-sm mb-1">Status: <span className="font-medium text-indigo-600">{user.status}</span></p>
+                <select
+                  value={user.status}
+                  onChange={(e) => handleStatusChange(user.id, e.target.value)}
+                  className="text-sm border border-gray-300 rounded-lg w-full mt-1 px-2 py-1"
+                >
+                  <option value="Silver">Silver</option>
+                  <option value="Gold">Gold</option>
+                  <option value="Platinum">Platinum</option>
+                </select>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+
+      {selectedUser && (
+        <div className="bg-white p-4 rounded-xl shadow-md mt-6">
+          <h2 className="text-sm font-semibold text-gray-600 mb-3">Activity Log</h2>
+          <div className="flex items-center gap-3 mb-2">
+            <img
+              src={selectedUser.avatar}
+              alt={selectedUser.name}
+              className="w-8 h-8 rounded-full object-cover"
+            />
+            <p className="text-gray-800 font-semibold">{selectedUser.name}</p>
+          </div>
+          <p className="text-sm text-gray-700">
+            Menggunakan layanan <span className="font-semibold text-indigo-600">{selectedUser.service}</span> dan mendapatkan
+            <span className="text-green-600 font-semibold"> +{Math.floor(selectedUser.points / 10)} poin</span>
+          </p>
+        </div>
+      )}
     </div>
   );
 };

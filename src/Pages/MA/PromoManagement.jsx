@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Plus } from "lucide-react";
 
 const initialPromos = [
   { id: 1, title: "Diskon 20% Pelajar", status: "Aktif", preview: "Detail promo pelajar" },
@@ -14,7 +15,13 @@ const initialPromos = [
 
 const PromoManagement = () => {
   const [promos, setPromos] = useState(initialPromos);
-  const [newPromo, setNewPromo] = useState({ title: "", status: "Aktif", preview: "" });
+  const [newPromo, setNewPromo] = useState({
+    title: "",
+    status: "Aktif",
+    preview: "",
+    startDate: "",
+    endDate: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,12 +30,20 @@ const PromoManagement = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (newPromo.title && newPromo.preview) {
-      const newId = promos.length > 0 ? promos[promos.length - 1].id + 1 : 1;
-      const updatedPromos = [...promos, { id: newId, ...newPromo }];
-      setPromos(updatedPromos);
-      setNewPromo({ title: "", status: "Aktif", preview: "" });
-    }
+    if (!newPromo.title || !newPromo.preview) return;
+
+    const newId = promos.length > 0 ? promos[promos.length - 1].id + 1 : 1;
+    const promoWithDate = {
+      id: newId,
+      title: newPromo.title,
+      status: newPromo.status,
+      preview: newPromo.preview,
+      startDate: newPromo.startDate || "-",
+      endDate: newPromo.endDate || "-",
+    };
+
+    setPromos([...promos, promoWithDate]);
+    setNewPromo({ title: "", status: "Aktif", preview: "", startDate: "", endDate: "" });
   };
 
   const handleDelete = (id) => {
@@ -41,82 +56,138 @@ const PromoManagement = () => {
       title: promoToEdit.title,
       status: promoToEdit.status,
       preview: promoToEdit.preview,
+      startDate: promoToEdit.startDate !== "-" ? promoToEdit.startDate : "",
+      endDate: promoToEdit.endDate !== "-" ? promoToEdit.endDate : "",
     });
     handleDelete(id);
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-gray-800">Kelola Promosi</h1>
-
-      {/* Form Tambah Promo */}
-      <form onSubmit={handleSubmit} className="bg-white p-4 rounded-2xl shadow-md space-y-4">
+    <div className="p-6 bg-gray-50 min-h-screen space-y-6">
+      {/* Header */}
+      <div className="flex justify-between items-center">
         <div>
-          <label className="block font-medium text-gray-700">Judul Promo</label>
+          <h1 className="text-xl font-semibold text-gray-800">Promo Management</h1>
+          <p className="text-sm text-gray-500">Atur dan tetapkan promo untuk pelanggan</p>
+        </div>
+        <div
+          title="Tambah Promo"
+          onClick={handleSubmit}
+          className="cursor-pointer text-gray-400 hover:text-gray-600"
+        >
+          <Plus size={20} />
+        </div>
+      </div>
+
+      {/* Form */}
+      <form className="bg-white p-4 rounded-xl shadow-sm grid md:grid-cols-2 gap-4">
+        <div>
+          <label className="text-sm text-gray-700 font-medium">Judul Promo</label>
           <input
             type="text"
             name="title"
             value={newPromo.title}
             onChange={handleChange}
-            className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
+            className="w-full mt-1 p-2 border border-gray-300 rounded-lg text-sm"
+            placeholder="Contoh: Diskon Pelanggan Baru"
             required
           />
         </div>
         <div>
-          <label className="block font-medium text-gray-700">Status</label>
+          <label className="text-sm text-gray-700 font-medium">Status</label>
           <select
             name="status"
             value={newPromo.status}
             onChange={handleChange}
-            className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
+            className="w-full mt-1 p-2 border border-gray-300 rounded-lg text-sm"
           >
             <option value="Aktif">Aktif</option>
             <option value="Nonaktif">Nonaktif</option>
           </select>
         </div>
         <div>
-          <label className="block font-medium text-gray-700">Deskripsi Preview</label>
+          <label className="text-sm text-gray-700 font-medium">Tanggal Mulai</label>
+          <input
+            type="date"
+            name="startDate"
+            value={newPromo.startDate}
+            onChange={handleChange}
+            className="w-full mt-1 p-2 border border-gray-300 rounded-lg text-sm"
+          />
+        </div>
+        <div>
+          <label className="text-sm text-gray-700 font-medium">Tanggal Berakhir</label>
+          <input
+            type="date"
+            name="endDate"
+            value={newPromo.endDate}
+            onChange={handleChange}
+            className="w-full mt-1 p-2 border border-gray-300 rounded-lg text-sm"
+          />
+        </div>
+        <div className="md:col-span-2">
+          <label className="text-sm text-gray-700 font-medium">Deskripsi Promo</label>
           <textarea
             name="preview"
             value={newPromo.preview}
             onChange={handleChange}
-            className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
+            className="w-full mt-1 p-2 border border-gray-300 rounded-lg text-sm"
+            placeholder="Contoh: Promo khusus pelanggan baru..."
+            rows="2"
             required
           />
         </div>
-        <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition">
-          Tambah Promo
-        </button>
       </form>
 
-      {/* Daftar Promo */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {promos.map((promo) => (
-          <div key={promo.id} className="bg-white shadow-md rounded-2xl p-4 relative">
-            <h2 className="text-xl font-semibold">{promo.title}</h2>
-            <p className="text-sm text-gray-500 mt-1">
-              Status:{" "}
-              <span className={`font-medium ${promo.status === "Aktif" ? "text-green-600" : "text-red-500"}`}>
-                {promo.status}
-              </span>
-            </p>
-            <p className="text-sm text-gray-600 mt-1">{promo.preview}</p>
-            <div className="flex gap-2 mt-4">
-              <button
-                onClick={() => handleEdit(promo.id)}
-                className="px-3 py-1 bg-yellow-400 text-white rounded-lg hover:bg-yellow-500 transition"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(promo.id)}
-                className="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-              >
-                Hapus
-              </button>
-            </div>
-          </div>
-        ))}
+      {/* Promo List */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white rounded-xl overflow-hidden shadow-sm text-sm">
+          <thead className="bg-gray-100 text-gray-700">
+            <tr>
+              <th className="px-4 py-2 text-left">Judul</th>
+              <th className="px-4 py-2 text-left">Status</th>
+              <th className="px-4 py-2 text-left">Periode</th>
+              <th className="px-4 py-2 text-left">Deskripsi</th>
+              <th className="px-4 py-2 text-left">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {promos.map((promo) => (
+              <tr key={promo.id} className="border-b hover:bg-gray-50">
+                <td className="px-4 py-2">{promo.title}</td>
+                <td className="px-4 py-2">
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                      promo.status === "Aktif"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-red-100 text-red-600"
+                    }`}
+                  >
+                    {promo.status}
+                  </span>
+                </td>
+                <td className="px-4 py-2 text-gray-600">
+                  {promo.startDate || "-"} - {promo.endDate || "-"}
+                </td>
+                <td className="px-4 py-2 text-gray-600">{promo.preview}</td>
+                <td className="px-4 py-2 space-x-3 text-sm">
+                  <span
+                    onClick={() => handleEdit(promo.id)}
+                    className="text-blue-500 hover:underline cursor-pointer"
+                  >
+                    Edit
+                  </span>
+                  <span
+                    onClick={() => handleDelete(promo.id)}
+                    className="text-gray-400 hover:underline cursor-pointer"
+                  >
+                    Hapus
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

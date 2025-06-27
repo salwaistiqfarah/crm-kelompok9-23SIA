@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogIn } from 'lucide-react';
+import { LogIn, Eye, EyeOff } from 'lucide-react';
+import logo from '../../assets/logobarber.jpg';
+import barberBg from '../../assets/cukur rambut.jpg';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -9,23 +11,20 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  // ✅ Cek login saat halaman dibuka, hanya jika di /signin
   useEffect(() => {
     const role = localStorage.getItem('role');
     if (window.location.pathname === '/signin') {
       if (role === 'admin') navigate('/admin/weeklyforecast', { replace: true });
       else if (role === 'user') navigate('/user/booking', { replace: true });
     }
-  }, [navigate]); // tambahkan navigate untuk mematuhi linter
- 
-  // ✅ Hapus error saat input berubah
+  }, [navigate]);
+
   useEffect(() => {
     setError('');
   }, [email, password]);
 
   const handleLogin = (e) => {
     e.preventDefault();
-
     const trimmedEmail = email.trim();
     const trimmedPassword = password.trim();
 
@@ -41,51 +40,57 @@ const Login = () => {
 
     localStorage.setItem('role', role);
     localStorage.setItem('user', JSON.stringify({ email: trimmedEmail }));
-
     alert('Login berhasil!');
-
-    if (role === 'admin') navigate('/admin/laporan');
-    else navigate('/user/booking');
+    navigate(role === 'admin' ? '/admin/laporan' : '/user/booking');
   };
 
   return (
     <div className="flex min-h-screen">
-      {/* Kiri: Ilustrasi */}
-      <div className="hidden md:flex w-1/2 bg-purple-700 items-center justify-center p-10">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">BARBER STC</h1>
-          <p className="text-purple-200 text-lg">
-            Selamat datang kembali! Silakan login untuk mengelola dashboard Anda.
-          </p>
+      {/* Kiri: Background */}
+      <div
+        className="hidden md:flex w-1/2 items-center justify-center relative bg-cover bg-center"
+        style={{ backgroundImage: `url(${barberBg})` }}
+      >
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="relative z-10 flex flex-col items-center text-white text-center px-4">
           <img
-            src="https://cdni.iconscout.com/illustration/premium/thumb/admin-login-4489145-3723273.png"
-            alt="Login Illustration"
-            className="mt-10 max-w-xs"
+            src={logo}
+            alt="Logo"
+            className="w-28 h-28 mb-4 rounded-full border-4 border-white shadow-lg"
           />
+          <h1 className="text-3xl font-bold mb-2">BARBERSHOP STC</h1>
+          <p className="text-lg max-w-sm">
+            Selamat datang! Silakan login untuk mengakses layanan kami.
+          </p>
         </div>
       </div>
 
-      {/* Kanan: Form Login */}
+      {/* Kanan: Login Card */}
       <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-50 p-8">
-        <form onSubmit={handleLogin} className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-          <div className="flex items-center gap-2 mb-6">
-            <LogIn className="text-purple-600" />
-            <h2 className="text-2xl font-semibold text-gray-800">Login</h2>
+        <form
+          onSubmit={handleLogin}
+          className="w-full max-w-md bg-white p-8 rounded-xl shadow-xl border border-gray-200"
+        >
+          <div className="flex flex-col items-center gap-2 mb-6">
+            <img src={logo} alt="Logo" className="w-16 h-16 rounded-full" />
+            <div className="flex items-center gap-2">
+              <LogIn className="text-[#A67C52]" />
+              <h2 className="text-xl font-semibold text-gray-800">LOGIN</h2>
+            </div>
           </div>
 
           {error && (
-            <div className="bg-red-100 text-red-600 px-4 py-2 rounded mb-4 text-sm">
+            <div className="bg-red-100 text-red-600 px-4 py-2 rounded mb-4 text-sm text-center">
               {error}
             </div>
           )}
 
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm text-gray-600 mb-1">Email</label>
+            <label htmlFor="email" className="block text-sm text-gray-700 mb-1">Email</label>
             <input
               type="email"
               id="email"
-              placeholder="admin@example.com"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#A67C52] focus:outline-none"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -93,36 +98,34 @@ const Login = () => {
           </div>
 
           <div className="mb-6">
-            <label htmlFor="password" className="block text-sm text-gray-600 mb-1">Password</label>
+            <label htmlFor="password" className="block text-sm text-gray-700 mb-1">Password</label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
-                placeholder="********"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#A67C52] focus:outline-none pr-10"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <button
-                type="button"
+              <div
+                className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-[#A67C52]"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute top-1/2 right-3 transform -translate-y-1/2 text-sm text-purple-600"
               >
-                {showPassword ? 'Hide' : 'Show'}
-              </button>
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </div>
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition font-semibold"
+            className="w-full bg-[#A67C52] text-black py-2 rounded-lg hover:bg-[#8c6239] transition font-semibold text-center"
           >
             Login
           </button>
 
           <p className="mt-6 text-sm text-center text-gray-500">
-            © {new Date().getFullYear()} UMKM CRM. All rights reserved.
+            © {new Date().getFullYear()} BARBERSHOP STC. All rights reserved.
           </p>
         </form>
       </div>

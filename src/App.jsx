@@ -10,7 +10,7 @@ import Login from './Pages/SFA/Login';
 import Register from './Pages/SFA/Register';
 
 // Admin Pages
-import Dashboard from './Pages/Admin/Dashboard';
+import Dashboard from './Pages/SFA/Dashboard';
 import CustomerManagement from './Pages/CustomerManagement';
 import Feedback from './Pages/History/Feedback';
 import VisitHistory from './Pages/History/VisitHistory';
