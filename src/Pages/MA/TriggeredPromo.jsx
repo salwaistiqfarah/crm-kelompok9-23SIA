@@ -63,7 +63,7 @@ const TriggeredPromo = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-gray-800">Kelola Promo Otomatis</h1>
+      <h1 className="text-2xl font-bold text-[#A47551]">Kelola Promo Otomatis</h1>
 
       {/* Form Tambah/Edit */}
       <form onSubmit={handleSubmit} className="bg-white p-4 rounded-2xl shadow-md space-y-4">
@@ -101,7 +101,10 @@ const TriggeredPromo = () => {
             <option value="false">Nonaktif</option>
           </select>
         </div>
-        <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition">
+        <button
+          type="submit"
+          className="px-4 py-2 bg-[#A47551] text-white rounded-xl hover:bg-[#8c5f3f] transition"
+        >
           {editingId ? "Simpan Perubahan" : "Tambah Promo"}
         </button>
       </form>
@@ -109,7 +112,7 @@ const TriggeredPromo = () => {
       {/* Tabel Promo */}
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white shadow rounded-2xl">
-          <thead className="bg-indigo-100 text-indigo-700">
+          <thead className="bg-[#A47551] text-white">
             <tr>
               <th className="px-4 py-3 text-left">Trigger</th>
               <th className="px-4 py-3 text-left">Aksi Promo</th>
@@ -130,13 +133,13 @@ const TriggeredPromo = () => {
                 <td className="px-4 py-3 flex justify-center gap-2">
                   <button
                     onClick={() => handleEdit(promo)}
-                    className="px-3 py-1 bg-yellow-400 text-white rounded-lg hover:bg-yellow-500 transition"
+                    className="px-3 py-1 bg-[#A47551] text-white rounded-lg hover:bg-[#8c5f3f] transition"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(promo.id)}
-                    className="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                    className="px-3 py-1 bg-[#A47551] text-white rounded-lg hover:bg-[#8c5f3f] transition"
                   >
                     Hapus
                   </button>
