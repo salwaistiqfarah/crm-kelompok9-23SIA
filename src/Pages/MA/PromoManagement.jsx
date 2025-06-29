@@ -67,8 +67,8 @@ const PromoManagement = () => {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-xl font-semibold text-gray-800">Promo Management</h1>
-          <p className="text-sm text-gray-500">Atur dan tetapkan promo untuk pelanggan</p>
+          <h1 className="text-xl font-semibold text-[#A1662F]">Promo Management</h1>
+          <p className="text-sm text-[#A1662F]">Atur dan tetapkan promo untuk pelanggan</p>
         </div>
         <div
           title="Tambah Promo"
@@ -142,7 +142,7 @@ const PromoManagement = () => {
       {/* Promo List */}
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded-xl overflow-hidden shadow-sm text-sm">
-          <thead className="bg-gray-100 text-gray-700">
+          <thead className="bg-[#F9E8D9] text-[#A1662F]">
             <tr>
               <th className="px-4 py-2 text-left">Judul</th>
               <th className="px-4 py-2 text-left">Status</th>
@@ -170,19 +170,19 @@ const PromoManagement = () => {
                   {promo.startDate || "-"} - {promo.endDate || "-"}
                 </td>
                 <td className="px-4 py-2 text-gray-600">{promo.preview}</td>
-                <td className="px-4 py-2 space-x-3 text-sm">
-                  <span
+                <td className="px-4 py-2 space-x-2 text-sm">
+                  <button
                     onClick={() => handleEdit(promo.id)}
-                    className="text-blue-500 hover:underline cursor-pointer"
+                    className="px-3 py-1 bg-[#A1662F] text-white rounded-md hover:bg-[#8b5125] transition"
                   >
                     Edit
-                  </span>
-                  <span
+                  </button>
+                  <button
                     onClick={() => handleDelete(promo.id)}
-                    className="text-gray-400 hover:underline cursor-pointer"
+                    className="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
                   >
                     Hapus
-                  </span>
+                  </button>
                 </td>
               </tr>
             ))}

@@ -33,7 +33,6 @@ const CustomerSegment = () => {
       ]);
       setNewSegment({ tier: "", benefit: "", minPoints: "" });
 
-      // Arahkan ke halaman UserSegmentInfo
       navigate("/UserSegmentInfo", {
         state: {
           name: selectedName,
@@ -52,7 +51,7 @@ const CustomerSegment = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-gray-800">Kelola Segmentasi Pelanggan</h1>
+      <h1 className="text-2xl font-bold text-[#9A572E]">Kelola Segmentasi Pelanggan</h1>
 
       {/* Form Tambah Segmentasi */}
       <div className="bg-white shadow-md rounded-2xl p-4 space-y-4">
