@@ -56,7 +56,20 @@ const initialUsers = [
   },
 ];
 
-const COLORS = ["#6366f1", "#d1d5db"];
+const COLORS = ["#A47551", "#D3B8A3"]; // Coklat & coklat muda
+
+const getStatusColor = (status) => {
+  switch (status) {
+    case "Gold":
+      return "#D4AF37";
+    case "Silver":
+      return "#A8A9AD";
+    case "Platinum":
+      return "#E5E4E2";
+    default:
+      return "#000";
+  }
+};
 
 const LoyaltyProgram = () => {
   const [users, setUsers] = useState(initialUsers);
@@ -80,11 +93,12 @@ const LoyaltyProgram = () => {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-gray-800 mb-4">Loyalty & Reward Management</h1>
+      <h1 className="text-2xl font-bold text-[#A47551] mb-4">Loyalty & Reward Management</h1>
 
       <div className="grid md:grid-cols-4 gap-6">
+        {/* User Statistics */}
         <div className="bg-white p-4 rounded-xl shadow-md col-span-1">
-          <h2 className="text-sm font-semibold text-gray-600 mb-2">User Statistics</h2>
+          <h2 className="text-sm font-semibold text-[#A47551] mb-2">User Statistics</h2>
           <ResponsiveContainer width="100%" height={150}>
             <PieChart>
               <Pie
@@ -93,7 +107,7 @@ const LoyaltyProgram = () => {
                 cy="50%"
                 innerRadius={40}
                 outerRadius={55}
-                fill="#8884d8"
+                fill="#A47551"
                 paddingAngle={2}
                 dataKey="value"
               >
@@ -105,14 +119,15 @@ const LoyaltyProgram = () => {
             </PieChart>
           </ResponsiveContainer>
           <p className="text-center text-sm mt-2">
-            <span className="text-indigo-600 font-bold text-xl">{users.length}</span> total users
+            <span className="text-[#A47551] font-bold text-xl">{users.length}</span> total users
           </p>
           <div className="flex justify-center gap-4 text-sm mt-2">
-            <span className="text-indigo-600">● Active</span>
-            <span className="text-gray-400">● Inactive</span>
+            <span className="text-[#A47551]">● Active</span>
+            <span className="text-[#D3B8A3]">● Inactive</span>
           </div>
         </div>
 
+        {/* User List */}
         <div className="col-span-3">
           <div className="relative mb-4">
             <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
@@ -121,7 +136,7 @@ const LoyaltyProgram = () => {
               placeholder="Cari nama pelanggan..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-10 pr-4 py-2 w-full text-sm border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="pl-10 pr-4 py-2 w-full text-sm border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#A47551]"
             />
           </div>
 
@@ -144,7 +159,15 @@ const LoyaltyProgram = () => {
                   </div>
                 </div>
                 <p className="text-sm text-gray-700 mb-1">Poin: {user.points}</p>
-                <p className="text-sm mb-1">Status: <span className="font-medium text-indigo-600">{user.status}</span></p>
+                <p className="text-sm mb-1">
+                  Status:{" "}
+                  <span
+                    className="font-medium"
+                    style={{ color: getStatusColor(user.status) }}
+                  >
+                    {user.status}
+                  </span>
+                </p>
                 <select
                   value={user.status}
                   onChange={(e) => handleStatusChange(user.id, e.target.value)}
@@ -160,6 +183,7 @@ const LoyaltyProgram = () => {
         </div>
       </div>
 
+      {/* Activity Log */}
       {selectedUser && (
         <div className="bg-white p-4 rounded-xl shadow-md mt-6">
           <h2 className="text-sm font-semibold text-gray-600 mb-3">Activity Log</h2>
@@ -172,7 +196,8 @@ const LoyaltyProgram = () => {
             <p className="text-gray-800 font-semibold">{selectedUser.name}</p>
           </div>
           <p className="text-sm text-gray-700">
-            Menggunakan layanan <span className="font-semibold text-indigo-600">{selectedUser.service}</span> dan mendapatkan
+            Menggunakan layanan{" "}
+            <span className="font-semibold text-[#A47551]">{selectedUser.service}</span> dan mendapatkan
             <span className="text-green-600 font-semibold"> +{Math.floor(selectedUser.points / 10)} poin</span>
           </p>
         </div>

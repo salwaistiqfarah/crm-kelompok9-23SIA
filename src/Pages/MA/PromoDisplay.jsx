@@ -26,7 +26,7 @@ const PromoDisplay = () => {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Promo Tersedia</h1>
+      <h1 className="text-2xl font-bold mb-4 text-[#A47551]">Promo Tersedia</h1>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {promos.map((promo) => (
           <div key={promo.id} className="bg-white p-4 shadow rounded-2xl">
