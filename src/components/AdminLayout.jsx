@@ -8,7 +8,7 @@ const AdminLayout = () => {
       <SidebarAdmin />
 
       {/* Main content */}
-      <div className="flex-1 p-6 overflow-y-auto">
+      <div className="ml-64 flex-1 h-screen overflow-y-auto p-6">
         <Outlet />
       </div>
     </div>
