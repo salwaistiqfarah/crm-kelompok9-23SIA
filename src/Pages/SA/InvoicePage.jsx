@@ -1,212 +1,216 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { FaCheckCircle } from "react-icons/fa";
 
-const hairCardPrices = {
-  'Basic Haircut': 30000,
-  'Hair Spa': 50000,
-  'Coloring': 80000,
-  'Grooming Paket': 90000,
-  'Cukur Jenggot': 25000,
-};
+const initialInvoices = [
+  {
+    id: "INV-00124",
+    client: "Budi Santoso",
+    date: "2025-07-02",
+    status: "SENT",
+    total: 150000,
+    address: "Jl. Melati No. 5, Pekanbaru",
+    phone: "+62 812-3456-7890",
+    services: [
+      { name: "Potong Rambut", qty: 1, rate: 50000 },
+      { name: "Cukur Jenggot", qty: 1, rate: 100000 },
+    ],
+  },
+  {
+    id: "INV-00125",
+    client: "Rian Saputra",
+    date: "2025-07-01",
+    status: "PENDING",
+    total: 100000,
+  },
+  {
+    id: "INV-00126",
+    client: "Teguh Wahyu",
+    date: "2025-07-01",
+    status: "DRAFT",
+    total: 120000,
+  },
+  {
+    id: "INV-00127",
+    client: "Andi Hartono",
+    date: "2025-06-30",
+    status: "SENT",
+    total: 80000,
+    address: "Jl. Mawar No. 12, Pekanbaru",
+    phone: "+62 812-9999-0000",
+    services: [
+      { name: "Cuci Rambut", qty: 1, rate: 80000 },
+    ],
+  },
+];
 
-const NotificationPage = () => {
-  const [invoices, setInvoices] = useState([
-    {
-      id: 1,
-      name: 'Budi',
-      selectedCards: ['Basic Haircut'],
-      voucher: '',
-      status: 'Belum Bayar',
-      method: 'Cash',
-      paidAmount: '',
-      change: 0,
-    },
-    {
-      id: 2,
-      name: 'Sari',
-      selectedCards: ['Hair Spa', 'Cukur Jenggot'],
-      voucher: 'DISKON10',
-      status: 'Belum Bayar',
-      method: 'QR',
-      paidAmount: '',
-      change: 0,
-    },
-  ]);
+const InvoicePage = () => {
+  const [invoices, setInvoices] = useState(initialInvoices);
+  const [selected, setSelected] = useState(initialInvoices[0]);
+  const [modalContent, setModalContent] = useState(null);
 
-  const calculateTotal = (selectedCards, voucher = '') => {
-    const subtotal = selectedCards.reduce((sum, card) => sum + (hairCardPrices[card] || 0), 0);
-    if (voucher === 'DISKON10') {
-      return Math.floor(subtotal * 0.9); // diskon 10%
+  const handleMarkAsPaid = (id) => {
+    const updated = invoices.map((inv) =>
+      inv.id === id ? { ...inv, status: "LUNAS" } : inv
+    );
+    setInvoices(updated);
+    setSelected(updated.find((inv) => inv.id === id));
+  };
+
+  const handleAction = (action) => {
+    let content = null;
+    if (action === "Record Payment") {
+      content = (
+        <div>
+          <h3 className="text-lg font-bold mb-2">Record Payment</h3>
+          <p className="text-sm text-gray-600 mb-4">
+            Pembayaran invoice <strong>{selected.id}</strong> sejumlah <strong>Rp {selected.total.toLocaleString()}</strong>.
+          </p>
+          <div className="bg-gray-50 p-3 rounded border text-sm text-gray-700">
+            Invoice atas nama: <strong>{selected.client}</strong><br />
+            Layanan: {selected.services?.map((s) => s.name).join(", ")}<br />
+            Status: {selected.status === "LUNAS" ? "LUNAS" : selected.status}
+          </div>
+          <button
+            className="mt-5 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+            onClick={() => {
+              handleMarkAsPaid(selected.id);
+              setModalContent(null);
+            }}
+          >
+            Tandai Lunas
+          </button>
+        </div>
+      );
+    } else if (action === "Export") {
+      content = (
+        <div>
+          <h3 className="text-lg font-bold mb-2">Ekspor Invoice</h3>
+          <p className="text-sm text-gray-600">Unduh invoice dalam format PDF atau Excel</p>
+          <button className="w-full mt-2 border p-2 rounded hover:bg-gray-100">Download PDF</button>
+          <button className="w-full mt-2 border p-2 rounded hover:bg-gray-100">Download Excel</button>
+        </div>
+      );
     }
-    return subtotal;
+    setModalContent(content);
   };
 
-  const handleCardChange = (id, newCards) => {
-    setInvoices(prev =>
-      prev.map(inv => {
-        if (inv.id === id) {
-          const total = calculateTotal(newCards, inv.voucher);
-          const change = inv.paidAmount - total;
-          return { ...inv, selectedCards: newCards, change: change >= 0 ? change : 0 };
-        }
-        return inv;
-      })
-    );
-  };
-
-  const handleVoucherChange = (id, newVoucher) => {
-    setInvoices(prev =>
-      prev.map(inv => {
-        if (inv.id === id) {
-          const total = calculateTotal(inv.selectedCards, newVoucher);
-          const change = inv.paidAmount - total;
-          return { ...inv, voucher: newVoucher, change: change >= 0 ? change : 0 };
-        }
-        return inv;
-      })
-    );
-  };
-
-  const handleMethodChange = (id, newMethod) => {
-    setInvoices(prev =>
-      prev.map(inv =>
-        inv.id === id ? { ...inv, method: newMethod, paidAmount: '', change: 0 } : inv
-      )
-    );
-  };
-
-  const handlePaidAmountChange = (id, value) => {
-    setInvoices(prev =>
-      prev.map(inv => {
-        if (inv.id === id) {
-          const total = calculateTotal(inv.selectedCards, inv.voucher);
-          const change = value - total;
-          return { ...inv, paidAmount: value, change: change >= 0 ? change : 0 };
-        }
-        return inv;
-      })
-    );
-  };
-
-  const handleCompletePayment = (id) => {
-    setInvoices(prev =>
-      prev.map(inv => (inv.id === id ? { ...inv, status: 'Lunas' } : inv))
-    );
-  };
-
-  const handleToggleCard = (id, card) => {
-    setInvoices(prev =>
-      prev.map(inv => {
-        if (inv.id === id) {
-          let updatedCards = inv.selectedCards.includes(card)
-            ? inv.selectedCards.filter(c => c !== card)
-            : [...inv.selectedCards, card];
-          const total = calculateTotal(updatedCards, inv.voucher);
-          const change = inv.paidAmount - total;
-          return { ...inv, selectedCards: updatedCards, change: change >= 0 ? change : 0 };
-        }
-        return inv;
-      })
-    );
-  };
+  const closeModal = () => setModalContent(null);
 
   return (
-    <main className="p-8 bg-white min-h-screen text-[#5A4634]">
-      <header className="mb-6">
-        <h1 className="text-3xl font-bold text-[#8B5E3C]">💳 Kasir - HairCard</h1>
-        <p className="text-sm text-gray-500">Pilih layanan, hitung otomatis, dan proses diskon voucher.</p>
-      </header>
+    <div className="flex h-screen font-sans bg-gradient-to-br from-[#e0f7fa] via-[#f1f8e9] to-[#fce4ec] relative">
+      {modalContent && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded shadow-md w-full max-w-md relative">
+            <button onClick={closeModal} className="absolute top-2 right-2 text-gray-400 hover:text-black">&times;</button>
+            {modalContent}
+          </div>
+        </div>
+      )}
 
-      <section className="grid gap-6">
-        {invoices.map((inv) => {
-          const total = calculateTotal(inv.selectedCards, inv.voucher);
-          return (
-            <div key={inv.id} className="bg-gray-50 border rounded-xl p-5 shadow-sm space-y-3">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="text-lg font-bold">{inv.name}</h3>
+      <div className="w-1/3 border-r overflow-y-auto bg-white shadow-md">
+        <div className="p-4 font-bold text-xl border-b bg-white">All Invoices</div>
+        {invoices.map((inv) => (
+          <div
+            key={inv.id}
+            onClick={() => setSelected(inv)}
+            className={`flex justify-between items-center px-4 py-3 border-b cursor-pointer transition ${
+              inv.id === selected.id ? "bg-blue-50" : "hover:bg-gray-50"
+            }`}
+          >
+            <div>
+              <div className="font-semibold text-[#333]">{inv.client}</div>
+              <div className="text-sm text-gray-500">{inv.id} | {inv.date}</div>
+            </div>
+            <div className="text-sm font-semibold text-right">
+              <div>Rp {inv.total.toLocaleString()}</div>
+              <div className={
+                inv.status === "LUNAS" ? "text-green-500" :
+                inv.status === "SENT" ? "text-green-500" :
+                inv.status === "PENDING" ? "text-red-500" :
+                "text-gray-400"
+              }>{inv.status}</div>
+            </div>
+          </div>
+        ))}
+      </div>
 
-                  <div className="mt-2">
-                    <label className="block font-medium mb-1">Pilih HairCard:</label>
-                    <div className="grid grid-cols-2 gap-2 text-sm">
-                      {Object.keys(hairCardPrices).map((card) => (
-                        <label key={card} className="flex items-center gap-2">
-                          <input
-                            type="checkbox"
-                            checked={inv.selectedCards.includes(card)}
-                            onChange={() => handleToggleCard(inv.id, card)}
-                          />
-                          {card} (Rp{hairCardPrices[card].toLocaleString()})
-                        </label>
-                      ))}
-                    </div>
-                  </div>
+      <div className="w-2/3 p-8 overflow-y-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-[#2c3e50] flex items-center gap-2">
+            Invoice: {selected.id}
+            {selected.status === "LUNAS" && <FaCheckCircle className="text-green-500" title="Lunas" />}
+          </h2>
+          <div className="space-x-2">
+            <button onClick={() => handleAction('Record Payment')} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-sm transition">Record Payment</button>
+            <button onClick={() => handleAction('Export')} className="border px-4 py-2 rounded shadow-sm hover:bg-gray-100 transition">Export</button>
+          </div>
+        </div>
 
-                  <div className="mt-3 text-sm text-gray-600">
-                    <label className="mr-2">Voucher:</label>
-                    <input
-                      type="text"
-                      placeholder="Contoh: DISKON10"
-                      value={inv.voucher}
-                      onChange={(e) => handleVoucherChange(inv.id, e.target.value)}
-                      className="px-2 py-1 border rounded-md"
-                    />
-                  </div>
-
-                  <p className="mt-2 text-md font-semibold">
-                    Total Tagihan: Rp{total.toLocaleString()}
-                  </p>
-                  <p className="text-sm text-gray-600">Metode: {inv.method}</p>
-                </div>
-
-                <span className={`text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wide
-                  ${inv.status === 'Lunas' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}`}>
-                  {inv.status}
-                </span>
-              </div>
-
-              <div className="flex flex-col md:flex-row gap-4 md:items-center justify-between">
-                <div className="flex gap-4">
-                  <select
-                    value={inv.method}
-                    onChange={(e) => handleMethodChange(inv.id, e.target.value)}
-                    className="border border-gray-300 rounded-md px-3 py-1 text-sm"
-                  >
-                    <option value="Cash">Cash</option>
-                    <option value="QR">QR</option>
-                  </select>
-
-                  {inv.method === 'Cash' && (
-                    <input
-                      type="number"
-                      placeholder="Uang Diterima"
-                      value={inv.paidAmount}
-                      onChange={(e) => handlePaidAmountChange(inv.id, parseInt(e.target.value || 0))}
-                      className="border border-gray-300 rounded-md px-3 py-1 text-sm w-40"
-                    />
-                  )}
-                </div>
-
-                {inv.method === 'Cash' && inv.paidAmount >= total && (
-                  <p className="text-sm text-green-700 font-medium">
-                    Kembalian: Rp{inv.change.toLocaleString()}
-                  </p>
-                )}
-
-                {inv.status !== 'Lunas' && (
-                  <button
-                    onClick={() => handleCompletePayment(inv.id)}
-                    className="bg-[#8B5E3C] hover:bg-[#6f4a2c] text-white px-4 py-2 rounded-md text-sm transition"
-                  >
-                    Selesaikan Pembayaran
-                  </button>
-                )}
+        <div className="bg-white rounded shadow-2xl p-6 transform transition-transform duration-300 hover:scale-[1.01]">
+          <div className="flex justify-between mb-6">
+            <div>
+              <span className={`inline-block px-2 py-1 rounded text-xs font-semibold ${
+                selected.status === "LUNAS" ? "bg-green-100 text-green-600" :
+                selected.status === "SENT" ? "bg-green-100 text-green-600" :
+                selected.status === "PENDING" ? "bg-yellow-100 text-yellow-600" :
+                "bg-gray-100 text-gray-500"
+              }`}>
+                STATUS : {selected.status}
+              </span>
+              <div className="mt-4">
+                <p className="text-sm">Invoice Number</p>
+                <h3 className="font-bold text-lg">{selected.id}</h3>
+                <p className="text-sm text-gray-500">Issue Date: {selected.date}</p>
               </div>
             </div>
-          );
-        })}
-      </section>
-    </main>
+            <div className="text-right">
+              <h3 className="font-bold text-xl text-blue-700">BARBER STC</h3>
+              <p className="text-sm text-gray-500">Jl. Cendana No. 9, Pekanbaru</p>
+              <p className="text-sm text-gray-500">0812-2222-1111</p>
+            </div>
+          </div>
+
+          {(selected.status === "SENT" || selected.status === "LUNAS") && selected.services && (
+            <>
+              <div className="border-t border-b py-4 mb-6">
+                <div className="text-sm text-gray-600 mb-1">Client</div>
+                <h4 className="font-bold text-[#333]">{selected.client}</h4>
+                <p className="text-sm text-gray-500">{selected.address}</p>
+                <p className="text-sm text-gray-500">{selected.phone}</p>
+              </div>
+              <table className="w-full text-sm mb-4">
+                <thead>
+                  <tr className="text-left border-b">
+                    <th className="py-2">#</th>
+                    <th>Item & Description</th>
+                    <th>Qty</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selected.services.map((item, idx) => (
+                    <tr key={idx} className="border-b">
+                      <td className="py-2">{idx + 1}</td>
+                      <td>{item.name}</td>
+                      <td>{item.qty}</td>
+                      <td>Rp {item.rate.toLocaleString()}</td>
+                      <td>Rp {(item.qty * item.rate).toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="text-right">
+                <p>Sub Total: <strong>Rp {selected.total.toLocaleString()}</strong></p>
+                <p>Total: <strong>Rp {selected.total.toLocaleString()}</strong></p>
+                <p className="text-lg font-bold mt-2">Balance Due: Rp {selected.total.toLocaleString()}</p>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default NotificationPage;
+export default InvoicePage;

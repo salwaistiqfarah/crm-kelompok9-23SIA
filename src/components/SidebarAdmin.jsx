@@ -3,6 +3,7 @@ import {
   BarChart2,
   ChevronDown,
   ChevronRight,
+  LogOut,
 } from 'lucide-react';
 import {
   LuBadgePercent,
@@ -30,7 +31,7 @@ const SidebarAdmin = () => {
   };
 
   return (
-    <aside className="fixed top-0 left-0 bg-white w-64 h-screen shadow-md px-4 py-6 z-50 overflow-y-auto">
+    <aside className="fixed top-0 left-0 w-64 h-screen shadow-md px-4 py-6 z-50 overflow-y-auto bg-gradient-to-b from-[#FFF7F0] via-[#FAEFE3] to-[#E8D2B9]">
       {/* Logo */}
       <div className="flex flex-col items-center mb-6">
         <img
@@ -41,7 +42,7 @@ const SidebarAdmin = () => {
       </div>
 
       {/* Menu */}
-      <nav className="space-y-2 text-sm text-gray-500">
+      <nav className="space-y-2 text-sm text-gray-700">
         {/* Laporan */}
         <Link
           to="/admin/weeklyForecast"
@@ -68,10 +69,13 @@ const SidebarAdmin = () => {
             {openPromo ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
           </button>
           {openPromo && (
-            <ul className="ml-6 mt-1 space-y-1 list-disc list-inside text-gray-700">
-              <li><Link to="/admin/promo_management">Promo Management</Link></li>
-              <li><Link to="/admin/loyalty_program">Loyalty Program</Link></li>
-              <li><Link to="/admin/triggered_promo">Triggered Promo</Link></li>
+            <ul className="ml-6 mt-2 space-y-2 list-disc list-inside text-gray-700 pl-2">
+              <li>
+                <Link to="/admin/promo_management">Promo Management</Link>
+              </li>
+              <li>
+                <Link to="/admin/loyalty_program">Loyalty Program</Link>
+              </li>
             </ul>
           )}
         </div>
@@ -102,10 +106,16 @@ const SidebarAdmin = () => {
             {openLayanan ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
           </button>
           {openLayanan && (
-            <ul className="ml-6 mt-1 space-y-1 list-disc list-inside text-gray-700">
-              <li><Link to="/admin/servicequeue">Antrian Layanan</Link></li>
-              <li><Link to="/admin/servicestatus">Status Layanan</Link></li>
-              <li><Link to="/admin/BookingHistory">Booking History</Link></li>
+            <ul className="ml-6 mt-2 space-y-2 list-disc list-inside text-gray-700 pl-2">
+              <li>
+                <Link to="/admin/servicequeue">Antrian Layanan</Link>
+              </li>
+              <li>
+                <Link to="/admin/servicestatus">Status Layanan</Link>
+              </li>
+              <li>
+                <Link to="/admin/BookingHistory">Booking History</Link>
+              </li>
             </ul>
           )}
         </div>
@@ -130,7 +140,8 @@ const SidebarAdmin = () => {
           onClick={handleLogout}
           className="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md bg-[#8C6239] text-white hover:bg-[#A67C52] transition-all duration-150"
         >
-          🚪 <span className="text-sm font-semibold">Logout</span>
+          <LogOut className="w-5 h-5" />
+          <span className="text-sm font-semibold">Logout</span>
         </button>
       </div>
     </aside>

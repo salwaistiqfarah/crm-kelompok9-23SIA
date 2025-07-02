@@ -1,65 +1,71 @@
-import React from 'react';
+import React from "react";
+import { MdDone, MdSchedule, MdPayment, MdErrorOutline } from "react-icons/md";
 
-const UserNotificationPage = () => {
+const NotificationPageUser = () => {
   const notifications = [
     {
       id: 1,
-      title: 'Pembayaran Anda Berhasil',
-      message: 'Terima kasih, pembayaran layanan potong rambut sebesar Rp50.000 telah berhasil.',
-      type: 'success',
-      time: '2 jam lalu',
+      title: "Layanan Selesai",
+      message: "Layanan Cukur Rambut kamu telah selesai. Terima kasih telah menggunakan layanan kami!",
+      time: "5 menit yang lalu",
+      type: "success",
     },
     {
       id: 2,
-      title: 'Layanan Siap Dilakukan',
-      message: 'Reservasi Anda untuk tanggal 28 Juni 2025 pukul 14:00 telah dikonfirmasi.',
-      type: 'info',
-      time: '1 hari lalu',
+      title: "Pembayaran Berhasil",
+      message: "Pembayaran sebesar Rp85.000 berhasil menggunakan GoPay.",
+      time: "10 menit yang lalu",
+      type: "payment",
     },
     {
       id: 3,
-      title: 'Promo Hari Ini!',
-      message: 'Diskon 10% untuk semua layanan hari ini! Berlaku hingga pukul 20.00.',
-      type: 'promo',
-      time: 'Hari ini',
+      title: "Jadwal Layanan Hari Ini",
+      message: "Kamu memiliki jadwal layanan Cat Rambut pukul 14:00 WIB.",
+      time: "Hari ini - 11:00",
+      type: "schedule",
     },
     {
       id: 4,
-      title: 'Pembayaran Belum Diselesaikan',
-      message: 'Layanan “Cukur + Cuci” senilai Rp70.000 belum dibayar. Segera selesaikan pembayaran Anda.',
-      type: 'warning',
-      time: '3 hari lalu',
-    }
+      title: "Konfirmasi Manual",
+      message: "Mohon upload bukti pembayaran untuk layanan Paket Komplit.",
+      time: "Kemarin",
+      type: "warning",
+    },
   ];
 
-  const getColor = (type) => {
-    switch (type) {
-      case 'success': return 'bg-green-100 text-green-800 border-green-300';
-      case 'warning': return 'bg-yellow-100 text-yellow-800 border-yellow-300';
-      case 'promo': return 'bg-purple-100 text-purple-800 border-purple-300';
-      case 'info': return 'bg-blue-100 text-blue-800 border-blue-300';
-      default: return 'bg-gray-100 text-gray-800 border-gray-300';
-    }
+  const iconMap = {
+    success: <MdDone className="text-green-600 text-xl" />,
+    payment: <MdPayment className="text-blue-600 text-xl" />,
+    schedule: <MdSchedule className="text-purple-600 text-xl" />,
+    warning: <MdErrorOutline className="text-yellow-600 text-xl" />,
   };
 
   return (
-    <main className="min-h-screen bg-white p-6 text-[#5A4634]">
-      <h1 className="text-3xl font-bold text-[#8B5E3C] mb-6">🔔 Notifikasi Anda</h1>
+    <div className="p-6 bg-gradient-to-br from-[#fefefe] to-[#fff9f3] min-h-screen">
+      <div className="bg-white rounded-2xl shadow-md p-6 border-l-8 border-[#ff9800] mb-6">
+        <h1 className="text-2xl font-bold text-[#A47551] mb-2">Notifikasi Kamu 🔔</h1>
+        <p className="text-sm text-gray-600">
+          Lihat pembaruan terbaru tentang aktivitasmu di layanan kami.
+        </p>
+      </div>
 
       <div className="space-y-4">
         {notifications.map((notif) => (
           <div
             key={notif.id}
-            className={`border-l-4 p-4 rounded-xl shadow-sm border ${getColor(notif.type)} transition hover:scale-[1.01]`}
+            className="bg-white rounded-xl shadow flex items-start p-4 border-l-4 border-gray-200"
           >
-            <h3 className="font-semibold text-lg">{notif.title}</h3>
-            <p className="text-sm mt-1">{notif.message}</p>
-            <p className="text-xs mt-2 text-gray-500">{notif.time}</p>
+            <div className="mr-4">{iconMap[notif.type]}</div>
+            <div className="flex-1">
+              <h3 className="text-sm font-semibold text-gray-800">{notif.title}</h3>
+              <p className="text-sm text-gray-600">{notif.message}</p>
+              <span className="text-xs text-gray-400">{notif.time}</span>
+            </div>
           </div>
         ))}
       </div>
-    </main>
+    </div>
   );
 };
 
-export default UserNotificationPage;
+export default NotificationPageUser;
