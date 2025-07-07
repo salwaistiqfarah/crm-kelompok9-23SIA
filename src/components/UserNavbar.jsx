@@ -51,38 +51,38 @@ const UserNavbar = () => {
   }, []);
 
   return (
-    <header className="bg-white shadow-md px-6 py-3 flex items-center justify-between sticky top-0 z-50">
+    <header className="bg-white/80 backdrop-blur-md border-b border-[#e0d2c0] shadow-lg px-6 py-4 flex items-center justify-between sticky top-0 z-50 rounded-b-xl">
       {/* Logo */}
       <div className="flex items-center gap-3">
-        <img src={logo} alt="Barbershop Logo" className="w-10 h-10 rounded-full object-cover border border-[#A67C52]" />
-        <h1 className="text-lg font-bold text-[#A67C52]">V's Barbershop</h1>
+        <img src={logo} alt="Barbershop Logo" className="w-12 h-12 rounded-full object-cover border-2 border-[#A67C52] shadow-md" />
+        <h1 className="text-xl font-bold text-[#A67C52] tracking-tight drop-shadow-sm">Barbershop STC</h1>
       </div>
 
       {/* Mobile Toggle */}
       <div className="lg:hidden">
         <button onClick={() => setNavOpen(!navOpen)}>
-          <Menu className="w-6 h-6 text-[#A67C52]" />
+          <Menu className="w-7 h-7 text-[#A67C52]" />
         </button>
       </div>
 
       {/* Navigation Centered */}
-      <nav className={`lg:flex gap-6 text-sm font-medium items-center justify-center ${
+      <nav className={`lg:flex gap-8 text-[15px] font-medium items-center justify-center ${
         navOpen ? 'block' : 'hidden'
-      } absolute lg:static top-20 left-0 w-full lg:w-auto bg-white lg:bg-transparent px-6 py-4 lg:p-0 shadow-lg lg:shadow-none`}>
-        <NavLink to="/user/dashboard" icon={<LayoutDashboard />} active={isActive('/user/dashboard')} label="Dashboard" />
-        <NavLink to="/user/promo_display" icon={<LuGift />} active={isActive('/user/promo_display')} label="Promo" />
-        <NavLink to="/user/triggeredpromoinfo" icon={<LuBolt />} active={isActive('/user/triggeredpromoinfo')} label="Promo Info" />
-        <NavLink to="/user/usersegmentinfo" icon={<LuUserCheck />} active={isActive('/user/usersegmentinfo')} label="Segment Info" />
-        <NavLink to="/user/status" icon={<FaRegListAlt />} active={isActive('/user/status')} label="Status" />
+      } absolute lg:static top-20 left-0 w-full lg:w-auto bg-white lg:bg-transparent px-6 py-4 lg:p-0 shadow-lg lg:shadow-none rounded-xl`}>
+        <NavLink to="/user/dashboard" icon={<LayoutDashboard size={22} />} active={isActive('/user/dashboard')} label="Dashboard" />
+        <NavLink to="/user/promo_display" icon={<LuGift size={22} />} active={isActive('/user/promo_display')} label="Promo" />
+        <NavLink to="/user/triggeredpromoinfo" icon={<LuBolt size={22} />} active={isActive('/user/triggeredpromoinfo')} label="Promo Info" />
+        <NavLink to="/user/usersegmentinfo" icon={<LuUserCheck size={22} />} active={isActive('/user/usersegmentinfo')} label="Segment Info" />
+        <NavLink to="/user/status" icon={<FaRegListAlt size={22} />} active={isActive('/user/status')} label="Status" />
       </nav>
 
       {/* Right Section */}
-      <div className="flex items-center gap-4 relative">
+      <div className="flex items-center gap-5 relative">
         {/* Bell */}
         <div onClick={handleNotificationClick} className="relative cursor-pointer hidden lg:block">
-          <Bell className="w-5 h-5 text-gray-600 hover:text-[#A67C52] transition" />
+          <Bell className="w-6 h-6 text-gray-600 hover:text-[#A67C52] transition" />
           {userData.notifications > 0 && (
-            <span className="absolute -top-1 -right-1 inline-block w-2.5 h-2.5 bg-red-600 rounded-full border-2 border-white"></span>
+            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-600 rounded-full border-2 border-white"></span>
           )}
         </div>
 
@@ -91,16 +91,16 @@ const UserNavbar = () => {
           <img
             src={userData.avatar}
             alt="User Avatar"
-            className="w-8 h-8 rounded-full object-cover cursor-pointer hover:ring-2 hover:ring-[#A67C52] transition"
+            className="w-9 h-9 rounded-full object-cover cursor-pointer hover:ring-2 hover:ring-[#A67C52] transition shadow-md"
             onClick={() => setDropdownOpen(!dropdownOpen)}
           />
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-md z-50">
+            <div className="absolute right-0 mt-3 bg-white shadow-xl rounded-md z-50 border w-40 animate-fade-in">
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 text-sm text-red-600 hover:bg-gray-100 w-full text-left"
+                className="flex items-center gap-2 px-4 py-3 text-sm text-red-600 hover:bg-gray-50 w-full text-left"
               >
-                <LogOut className="w-4 h-4 mr-2 inline" /> Logout
+                <LogOut className="w-4 h-4" /> Logout
               </button>
             </div>
           )}
@@ -113,11 +113,11 @@ const UserNavbar = () => {
 const NavLink = ({ to, icon, label, active }) => (
   <Link
     to={to}
-    className={`flex items-center gap-1 py-2 lg:py-0 hover:text-[#A67C52] transition ${
-      active ? 'text-[#A67C52] font-semibold' : 'text-gray-700'
+    className={`flex items-center gap-2 py-2 lg:py-0 transition duration-200 rounded-md px-3 ${
+      active ? 'text-[#A67C52] font-semibold bg-[#F8F3EF] shadow-inner' : 'text-gray-700 hover:text-[#A67C52] hover:bg-[#F4F1ED]'
     }`}
   >
-    <span className="text-base">{icon}</span>
+    <span>{icon}</span>
     {label}
   </Link>
 );

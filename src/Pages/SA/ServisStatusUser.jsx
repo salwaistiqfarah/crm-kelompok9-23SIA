@@ -1,165 +1,167 @@
 import React, { useState } from "react";
-import { MdPayments, MdOutlinePendingActions } from "react-icons/md";
-import { BsBank, BsPaypal } from "react-icons/bs";
+import {
+  MdOutlinePendingActions,
+  MdPayments,
+} from "react-icons/md";
+import {
+  BsBank,
+  BsPaypal,
+} from "react-icons/bs";
+import {
+  FaCheckCircle,
+  FaClock,
+  FaExclamationTriangle,
+  FaStar,
+} from "react-icons/fa";
+import {
+  SiPayoneer,
+  SiCashapp,
+} from "react-icons/si";
 
 const ServiceStatusUser = () => {
-  const [status, setStatus] = useState("Selesai"); // Bisa juga "Diproses", "Menunggu"
+  const [status, setStatus] = useState("Selesai");
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
-  const [paymentHistory, setPaymentHistory] = useState([]);
-  const [isPaid, setIsPaid] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(null);
+  const [feedback, setFeedback] = useState("");
+  const [rating, setRating] = useState(0);
+  const [showPopup, setShowPopup] = useState(false);
 
-  const layananDiambil = [
-    { nama: "Cukur Rambut", harga: 30000 },
-    { nama: "Cat Rambut", harga: 55000 },
-  ];
-
-  const totalPayment = layananDiambil.reduce((sum, item) => sum + item.harga, 0);
-
-  const handleBayarClick = () => {
-    setShowPaymentOptions(true);
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case "Selesai":
+        return {
+          icon: <FaCheckCircle className="text-yellow-700 text-xl" />, // warm pastel tone
+          label: "Selesai",
+          bg: "bg-gradient-to-br from-yellow-100 to-stone-100 border-yellow-300",
+          badge: "bg-yellow-600 text-white",
+        };
+      case "Diproses":
+        return {
+          icon: <FaClock className="text-yellow-500 text-xl" />,
+          label: "Sedang Diproses",
+          bg: "bg-gradient-to-br from-yellow-100 to-yellow-50 border-yellow-400",
+          badge: "bg-yellow-500 text-white",
+        };
+      case "Menunggu":
+        return {
+          icon: <FaExclamationTriangle className="text-red-500 text-xl" />,
+          label: "Menunggu Konfirmasi",
+          bg: "bg-gradient-to-br from-red-100 to-red-50 border-red-400",
+          badge: "bg-red-500 text-white",
+        };
+      default:
+        return {
+          icon: null,
+          label: "Tidak Diketahui",
+          bg: "bg-gray-100",
+          badge: "bg-gray-400 text-white",
+        };
+    }
   };
 
+  const statusInfo = getStatusStyle(status);
+
   const handlePayment = (method) => {
-    const newPayment = {
-      id: Date.now(),
-      method,
-      amount: totalPayment,
-      date: new Date().toLocaleString(),
-    };
-    setPaymentHistory([newPayment, ...paymentHistory]);
-    setShowPaymentOptions(false);
-    setIsPaid(true);
-    alert(`Pembayaran berhasil melalui ${method}! ✅`);
+    setPaymentSuccess(method);
+    setFeedback("");
+    setRating(0);
+  };
+
+  const handleFeedbackSubmit = () => {
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 2500);
   };
 
   return (
-    <div className="p-6 bg-gradient-to-br from-[#fff9f0] to-[#ffe8d6] min-h-screen">
-      {/* Status Pemesanan */}
-      <div className="bg-white rounded-2xl shadow-md p-6 border-l-8 border-[#ff9800] mb-6">
-        <h1 className="text-2xl font-bold text-[#A47551] mb-2">Status Layanan Kamu ✂️</h1>
-        <p className="text-sm text-gray-600">
-          Pantau terus status pemesananmu di sini dan lakukan pembayaran setelah layanan selesai.
-        </p>
+    <div className="w-full max-w-6xl mx-auto mt-10 px-10 py-12 bg-white shadow-2xl rounded-3xl border border-gray-200 space-y-12">
+      <div className="flex items-center justify-between">
+        <h2 className="text-3xl font-bold text-gray-800 tracking-tight">Status Layanan</h2>
+        <span className={`px-5 py-1.5 rounded-full text-sm font-semibold shadow-md ${statusInfo.badge}`}>
+          {statusInfo.label}
+        </span>
       </div>
 
-      {/* Status Booking */}
-      <div className="bg-white rounded-2xl shadow-md p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className={`rounded-3xl border p-6 flex items-center justify-between ${statusInfo.bg} shadow-inner`}> 
         <div className="flex items-center gap-4">
-          <MdOutlinePendingActions className="text-3xl text-[#ffa726]" />
+          {statusInfo.icon}
           <div>
-            <h2 className="text-lg font-semibold text-[#A47551]">
-              Status Booking: <span className="text-[#fb8c00]">{status}</span>
-            </h2>
-            <p className="text-sm text-gray-600">
-              Layananmu sedang {status.toLowerCase()}. Mohon tunggu sebentar ya!
-            </p>
+            <p className="text-xl font-semibold text-gray-800">{statusInfo.label}</p>
+            <p className="text-sm text-gray-600">Terakhir diperbarui: 7 Juli 2025</p>
           </div>
         </div>
+        {status === "Selesai" && (
+          <button
+            onClick={() => setShowPaymentOptions(true)}
+            className="px-7 py-2.5 bg-gradient-to-br from-yellow-300 to-stone-300 hover:brightness-105 text-white text-sm font-bold rounded-full shadow-xl active:scale-95 transform transition-all duration-300 border border-yellow-300"
+          >
+            Tandai Lunas
+          </button>
+        )}
       </div>
 
-      {/* Invoice & Pembayaran */}
-      {status === "Selesai" && (
-        <div className="mt-6 bg-white rounded-2xl shadow-md p-6 border-t-4 border-[#4caf50] space-y-4">
-          <h3 className="text-lg font-bold text-[#388e3c]">Invoice Layanan</h3>
-          <ul className="text-sm text-gray-700 space-y-2">
-            {layananDiambil.map((item, i) => (
-              <li key={i} className="flex justify-between border-b pb-1">
-                <span>{item.nama}</span>
-                <span>Rp {item.harga.toLocaleString()}</span>
-              </li>
+      {showPaymentOptions && (
+        <div className="space-y-6">
+          <h3 className="text-xl font-semibold text-gray-700">Pilih Metode Pembayaran</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[{ name: "CashApp", icon: <SiCashapp className="text-orange-400 text-2xl" /> },
+              { name: "Payoneer", icon: <SiPayoneer className="text-amber-500 text-2xl" /> },
+              { name: "M-Banking", icon: <BsBank className="text-gray-700 text-2xl" /> },
+              { name: "PayPal", icon: <BsPaypal className="text-blue-500 text-2xl" /> }
+            ].map(({ name, icon }) => (
+              <div
+                key={name}
+                onClick={() => handlePayment(name)}
+                className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl border bg-gradient-to-tr from-stone-50 to-white hover:shadow-xl cursor-pointer transition-all duration-200 hover:scale-105"
+              >
+                {icon}
+                <span className="font-medium text-gray-800 text-sm">{name}</span>
+              </div>
             ))}
-          </ul>
-
-          <div className="flex justify-between font-semibold text-[#4caf50] text-lg pt-2 border-t">
-            <span>Total</span>
-            <span>Rp {totalPayment.toLocaleString()}</span>
           </div>
 
-          {!isPaid && !showPaymentOptions && (
-            <button
-              onClick={handleBayarClick}
-              className="w-full bg-[#4caf50] hover:bg-[#388e3c] text-white py-2 rounded-xl font-semibold flex items-center justify-center gap-2"
-            >
-              <MdPayments className="text-xl" /> Bayar Sekarang
-            </button>
-          )}
-
-          {/* Pilihan Pembayaran */}
-          {showPaymentOptions && (
-            <div>
-              <p className="text-sm text-gray-600 mb-2">Pilih metode pembayaran:</p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {/* GoPay */}
-                <div
-                  onClick={() => handlePayment("GoPay")}
-                  className="flex flex-col items-center p-4 bg-[#e0f7fa] rounded-xl hover:shadow-md cursor-pointer"
-                >
-                  <img
-                    src="https://asset.kompas.com/crops/NdLpQHJULWvV90rbGfP3Qk9o2EM=/0x0:1000x667/750x500/data/photo/2022/10/05/633d7a459af3b.png"
-                    alt="GoPay"
-                    className="w-10 h-10 object-contain"
-                  />
-                  <span className="text-sm mt-2 font-medium">GoPay</span>
-                </div>
-
-                {/* M-Banking */}
-                <div
-                  onClick={() => handlePayment("M-Banking")}
-                  className="flex flex-col items-center p-4 bg-[#ede7f6] rounded-xl hover:shadow-md cursor-pointer"
-                >
-                  <BsBank className="text-3xl text-[#6a1b9a]" />
-                  <span className="text-sm mt-2 font-medium">M-Banking</span>
-                </div>
-
-                {/* ShopeePay */}
-                <div
-                  onClick={() => handlePayment("ShopeePay")}
-                  className="flex flex-col items-center p-4 bg-[#fff3e0] rounded-xl hover:shadow-md cursor-pointer"
-                >
-                  <img
-                    src="https://play-lh.googleusercontent.com/F6nlgJMQKghZAYyazKQPMfFzGk0mM94I2ldWu7D5qlbtOqgqVZci3vJrm2HZyK1AVw"
-                    alt="ShopeePay"
-                    className="w-10 h-10 object-contain"
-                  />
-                  <span className="text-sm mt-2 font-medium">ShopeePay</span>
-                </div>
-
-                {/* PayPal */}
-                <div
-                  onClick={() => handlePayment("PayPal")}
-                  className="flex flex-col items-center p-4 bg-[#e3f2fd] rounded-xl hover:shadow-md cursor-pointer"
-                >
-                  <BsPaypal className="text-3xl text-[#003087]" />
-                  <span className="text-sm mt-2 font-medium">PayPal</span>
-                </div>
+          {paymentSuccess && (
+            <div className="mt-6 space-y-6">
+              <div className="text-orange-900 text-md font-medium bg-amber-100 px-5 py-4 rounded-xl shadow">
+                Pembayaran dengan metode <span className="font-bold">{paymentSuccess}</span> berhasil. Total: <span className="font-semibold">Rp75.000</span>
               </div>
+
+              <div className="bg-gradient-to-br from-stone-50 to-white border border-gray-200 rounded-xl p-5 shadow-md space-y-4">
+                <h3 className="text-lg font-semibold text-gray-800">Beri Rating dan Komentar</h3>
+                <div className="flex gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <FaStar
+                      key={i}
+                      className={`text-xl cursor-pointer ${i < rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                      onClick={() => setRating(i + 1)}
+                    />
+                  ))}
+                </div>
+                <textarea
+                  value={feedback}
+                  onChange={(e) => setFeedback(e.target.value)}
+                  className="w-full h-24 p-3 rounded-lg border focus:ring-2 focus:ring-yellow-400 text-sm text-gray-800 resize-none shadow-inner"
+                  placeholder="Bagikan pengalaman kamu setelah melakukan pembayaran..."
+                />
+                <button
+                  onClick={handleFeedbackSubmit}
+                  className="px-6 py-2.5 bg-gradient-to-br from-yellow-400 to-stone-400 hover:brightness-105 text-white font-bold rounded-full shadow-lg active:scale-95 transition duration-300"
+                >
+                  Kirim Feedback
+                </button>
+              </div>
+              {showPopup && (
+                <div className="fixed top-6 left-1/2 transform -translate-x-1/2 text-center text-white font-medium bg-green-500 px-6 py-3 rounded-xl shadow-md animate-fade">
+                  Feedback Terkirim
+                </div>
+              )}
             </div>
           )}
         </div>
       )}
 
-      {/* Riwayat Pembayaran */}
-      {paymentHistory.length > 0 && (
-        <div className="mt-8 bg-white rounded-2xl shadow-md p-6">
-          <h3 className="text-lg font-bold text-[#A47551] mb-4">Riwayat Pembayaran</h3>
-          <ul className="space-y-3">
-            {paymentHistory.map((pay) => (
-              <li
-                key={pay.id}
-                className="flex justify-between items-center bg-[#fdf5e6] p-3 rounded-xl border"
-              >
-                <div>
-                  <p className="text-sm text-gray-700 font-medium">{pay.method}</p>
-                  <p className="text-xs text-gray-500">{pay.date}</p>
-                </div>
-                <span className="text-sm font-semibold text-[#4caf50]">
-                  Rp {pay.amount.toLocaleString()}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <div className="border-t pt-6 text-sm text-gray-500">
+        Jika mengalami kendala, silakan hubungi admin STC Barbershop melalui WhatsApp atau datang langsung ke lokasi.
+      </div>
     </div>
   );
 };

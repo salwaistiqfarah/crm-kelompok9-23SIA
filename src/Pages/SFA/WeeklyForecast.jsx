@@ -23,14 +23,14 @@ const serviceData = [
   { name: 'Lainnya', value: 10 },
 ];
 
-const COLORS = ['#FF8A80', '#FFD740', '#80D8FF', '#B388FF'];
+const COLORS = ['#A1887F', '#6D4C41', '#8D6E63', '#5D4037'];
 
 const transactionHistory = [
   { id: 'TX001', name: 'Raka Pratama', service: 'Cukur + Cuci', amount: 35000, date: '2025-06-27', status: 'Completed' },
-  { id: 'TX002', name: 'Salsabila', service: 'Hair Coloring', amount: 75000, date: '2025-06-27', status: 'Pending' },
+  { id: 'TX002', name: 'Andi Wijaya', service: 'Hair Coloring', amount: 75000, date: '2025-06-27', status: 'Pending' },
   { id: 'TX003', name: 'Dimas Aditya', service: 'Cukur Rambut', amount: 25000, date: '2025-06-26', status: 'Completed' },
   ...Array.from({ length: 51 }, (_, i) => {
-    const names = ['Fajar', 'Sari', 'Reno', 'Budi', 'Dewi', 'Adit', 'Lina', 'Raka Pratama', 'Salsabila', 'Dimas Aditya'];
+    const names = ['Fajar', 'Reno', 'Budi', 'Adit', 'Raka Pratama', 'Dimas Aditya', 'Andi Wijaya', 'Reza Maulana', 'Yusuf Hidayat', 'Fikri Ananda'];
     const services = ['Cukur Rambut', 'Cukur + Cuci', 'Hair Coloring', 'Lainnya'];
     const statuses = ['Completed', 'Pending'];
     const random = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -50,48 +50,48 @@ const transactionHistory = [
 
 const Dashboard = () => {
   return (
-    <div className="bg-[#fdfaf6] min-h-screen">
+    <div className="bg-[#f9f7f5] min-h-screen">
       <Header />
 
       <div className="p-6 max-w-7xl mx-auto space-y-8 text-gray-800">
-        <h1 className="text-4xl font-extrabold text-purple-700 text-center mb-4 drop-shadow-sm">BARBER STC</h1>
+        <h1 className="text-4xl font-extrabold text-[#5D4037] text-center mb-4 drop-shadow-sm">BARBER STC</h1>
 
-        <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-6 flex flex-col md:flex-row justify-between gap-6">
+        <div className="bg-white rounded-3xl shadow-xl p-6 flex flex-col md:flex-row justify-between gap-6">
           <div>
-            <h2 className="text-lg text-gray-500">Saldo Utama</h2>
-            <h1 className="text-3xl font-bold text-green-600 drop-shadow-md">Rp 12.430.000</h1>
+            <h2 className="text-lg text-gray-600">Saldo Utama</h2>
+            <h1 className="text-3xl font-bold text-[#388E3C] drop-shadow-md">Rp 12.430.000</h1>
             <p className="text-sm text-gray-400">Per 27 Juni 2025</p>
           </div>
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-pink-200 p-4 rounded-2xl text-center shadow-2xl">
+            <div className="bg-[#EFEBE9] p-4 rounded-2xl text-center shadow-md">
               <p className="text-xs text-gray-600">Pendapatan Mingguan</p>
-              <p className="text-lg font-bold text-pink-700">Rp 3.200.000</p>
+              <p className="text-lg font-bold text-[#6D4C41]">Rp 3.200.000</p>
             </div>
-            <div className="bg-yellow-200 p-4 rounded-2xl text-center shadow-2xl">
+            <div className="bg-[#D7CCC8] p-4 rounded-2xl text-center shadow-md">
               <p className="text-xs text-gray-600">Jumlah Booking</p>
-              <p className="text-lg font-bold text-yellow-700">56 Booking</p>
+              <p className="text-lg font-bold text-[#4E342E]">56 Booking</p>
             </div>
-            <div className="bg-blue-200 p-4 rounded-2xl text-center shadow-2xl">
+            <div className="bg-[#BCAAA4] p-4 rounded-2xl text-center shadow-md">
               <p className="text-xs text-gray-600">Layanan Terlaris</p>
-              <p className="text-lg font-bold text-blue-700">Cukur + Cuci</p>
+              <p className="text-lg font-bold text-[#3E2723]">Cukur + Cuci</p>
             </div>
           </div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-2xl shadow-2xl p-4">
+          <div className="bg-white rounded-2xl shadow-md p-4">
             <h3 className="text-sm font-semibold mb-2">Statistik Booking Mingguan</h3>
             <ResponsiveContainer width="100%" height={150}>
               <BarChart data={bookingStats}>
                 <XAxis dataKey="day" tick={{ fontSize: 10 }} />
                 <YAxis hide />
                 <Tooltip />
-                <Bar dataKey="bookings" fill="#9575CD" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="bookings" fill="#6D4C41" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-2xl p-4">
+          <div className="bg-white rounded-2xl shadow-md p-4">
             <h3 className="text-sm font-semibold mb-2">Distribusi Layanan</h3>
             <ResponsiveContainer width="100%" height={150}>
               <PieChart>
@@ -114,17 +114,17 @@ const Dashboard = () => {
             </ResponsiveContainer>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-2xl p-4">
+          <div className="bg-white rounded-2xl shadow-md p-4">
             <h3 className="text-sm font-semibold mb-2">Jadwal Hari Ini</h3>
             <ul className="text-sm space-y-1">
-              <li><FaCalendarAlt className="inline mr-2 text-pink-500" /> 10:00 - Fajar (Cukur)</li>
-              <li><FaCalendarAlt className="inline mr-2 text-yellow-500" /> 11:00 - Sari (Cat Rambut)</li>
-              <li><FaCalendarAlt className="inline mr-2 text-blue-500" /> 13:00 - Reno (Paket Komplit)</li>
+              <li><FaCalendarAlt className="inline mr-2 text-[#5D4037]" /> 10:00 - Fajar (Cukur)</li>
+              <li><FaCalendarAlt className="inline mr-2 text-[#6D4C41]" /> 11:00 - Reno (Cat Rambut)</li>
+              <li><FaCalendarAlt className="inline mr-2 text-[#8D6E63]" /> 13:00 - Budi (Paket Komplit)</li>
             </ul>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-2xl p-6 overflow-x-auto">
+        <div className="bg-white rounded-2xl shadow-md p-6 overflow-x-auto">
           <h3 className="text-lg font-semibold mb-4">Riwayat Transaksi</h3>
           <table className="w-full text-sm min-w-[600px]">
             <thead className="text-left text-gray-500">

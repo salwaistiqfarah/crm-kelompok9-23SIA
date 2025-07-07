@@ -4,13 +4,12 @@ const TriggeredPromo = () => {
   const [triggeredPromos, setTriggeredPromos] = useState([]);
 
   useEffect(() => {
-    // Simulasikan user baru
     const isNewUser = true;
 
     const dummyTriggered = [
       {
         id: 1,
-        title: "Selamat Datang di V's Barbershop!",
+        title: "Selamat Datang di STC Barbershop!",
         condition: "Khusus untuk pelanggan baru",
         image: "https://i.pinimg.com/736x/1b/98/29/1b9829fc388268be03661fa8a55ee5b4.jpg",
         action: "Dapatkan Diskon 20% untuk layanan pertama kamu di barbershop kami!",
@@ -27,58 +26,60 @@ const TriggeredPromo = () => {
   };
 
   return (
-    <div className="p-6">
-      {/* Banner background full image */}
-      <div
-  className="relative rounded-2xl overflow-hidden mb-8 shadow h-48 md:h-60"
-  style={{
-    backgroundImage: "url('https://i.pinimg.com/736x/7c/6d/e5/7c6de562e121b632f4554c828bc13024.jpg')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  }}
->
-  {/* Semi-transparent text container */}
-  <div className="absolute inset-0 flex flex-col justify-center px-6 md:px-10">
-    <div className="bg-white bg-opacity-70 p-4 rounded-xl w-fit max-w-2xl">
-      <h1 className="text-[#A47551] text-xl md:text-3xl font-bold mb-1">
-        🎁 Promo Spesial untuk Kamu
-      </h1>
-      <p className="text-gray-800 text-sm md:text-base">
-        Terima kasih telah bergabung dengan V's Barbershop! Sebagai pelanggan baru, kamu mendapatkan promo eksklusif yang hanya bisa diklaim sekali.
-      </p>
-    </div>
-  </div>
-</div>
+    <div className="p-6 bg-gradient-to-br from-[#fdf7f1] via-[#fceee4] to-[#fdf6ef]">
+      {/* Header Section with Gradient */}
+      <div className="text-center mb-10">
+        <h1 className="text-3xl md:text-4xl font-bold text-[#5B4636] mb-2 animate-pulse">
+          🎉 PROMO KHUSUS UNTUK PELANGGAN BARU
+        </h1>
+        <p className="text-gray-600 max-w-2xl mx-auto">
+          Kamu spesial! Sebagai pelanggan baru, nikmati layanan eksklusif dan pengalaman terbaik di STC Barbershop.
+        </p>
+      </div>
 
-      {/* Promo Card */}
-      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+      {/* Promo Card Section */}
+      <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
         {triggeredPromos.map((promo) => (
           <div
             key={promo.id}
-            className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all"
+            className="bg-white rounded-2xl overflow-hidden shadow-xl border border-[#f1e8de] transition-all hover:scale-[1.01]"
           >
-            <img
-              src={promo.image}
-              alt={promo.title}
-              className="w-full h-48 object-cover"
-            />
+            <div className="relative">
+              <img
+                src={promo.image}
+                alt={promo.title}
+                className="w-full h-56 object-cover"
+              />
+              <div className="absolute top-4 left-4 bg-[#A47551] text-white px-3 py-1 text-xs rounded-full shadow-md">
+                NEW USER
+              </div>
+            </div>
             <div className="p-5">
-              <h2 className="text-xl font-bold text-[#A47551] mb-1">
+              <h2 className="text-2xl font-bold text-[#A47551] mb-2">
                 {promo.title}
               </h2>
               <p className="text-sm text-gray-600 italic mb-2">
                 {promo.condition}
               </p>
-              <p className="text-sm text-gray-700 mb-4">{promo.action}</p>
+              <p className="text-sm text-gray-700 mb-4">
+                {promo.action}
+              </p>
               <button
                 onClick={() => handleClaim(promo.title)}
-                className="w-full py-2 rounded-lg bg-[#A47551] text-white font-semibold hover:bg-[#8a5f3f] transition"
+                className="w-full py-2 rounded-lg bg-[#A47551] text-white font-semibold hover:bg-[#8a5f3f] transition shadow-md"
               >
                 Klaim Sekarang
               </button>
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Decorative Section Bottom */}
+      <div className="mt-12 text-center text-sm text-gray-500">
+        <p>
+          ✂️ STC Barbershop - Gaya & Percaya Diri Sejak 1999 ✨
+        </p>
       </div>
     </div>
   );
